@@ -1,4 +1,4 @@
-(ns metalisp.model
+(ns regesta.model
   "Canonical internal representation (IR).
 
    Defines schemas and constructors for Record, Assertion, Value, Provenance,
@@ -6,7 +6,7 @@
    constructors, and shape-level predicates.
 
    The model knows only the structural vocabulary (`:meta/*`). Documentary
-   predicates (title, agent, date, ...) live in `metalisp.plugins.canonical`
+   predicates (title, agent, date, ...) live in `regesta.plugins.canonical`
    or in format-specific plugins.
 
    See ADR 0001 (assertion-based IR), ADR 0003 (vocabulary layering) and

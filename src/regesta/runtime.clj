@@ -1,4 +1,4 @@
-(ns metalisp.runtime
+(ns regesta.runtime
   "Rule execution engine.
 
    Applies a compiled rule set to a record, collects productions
@@ -25,7 +25,7 @@
    - Cross-record execution, dedup, retract semantics, convergence
      detection, projection."
   (:require [malli.core :as m]
-            [metalisp.rules :as rules]))
+            [regesta.rules :as rules]))
 
 ;; ---------------------------------------------------------------------------
 ;; Bounds

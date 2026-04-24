@@ -1,4 +1,4 @@
-(ns metalisp.rules
+(ns regesta.rules
   "Declarative rule DSL.
 
    A rule is an EDN map with `:id`, `:phase`, `:match` and `:produce` keys.
@@ -26,7 +26,7 @@
             [clojure.string :as str]
             [clojure.walk :as walk]
             [malli.core :as m]
-            [metalisp.model :as model]))
+            [regesta.model :as model]))
 
 ;; ---------------------------------------------------------------------------
 ;; Variables

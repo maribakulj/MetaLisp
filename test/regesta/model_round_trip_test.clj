@@ -1,4 +1,4 @@
-(ns metalisp.model-round-trip-test
+(ns regesta.model-round-trip-test
   "Generative EDN round-trip test for the canonical model.
 
    For every major schema we generate N samples and assert that
@@ -12,7 +12,7 @@
   (:require [clojure.edn :as edn]
             [clojure.test :refer [deftest is]]
             [malli.generator :as mg]
-            [metalisp.model :as model]))
+            [regesta.model :as model]))
 
 (def ^:private sample-count
   "Kept modest so the suite stays fast. Sprint 1's contract is structural,
