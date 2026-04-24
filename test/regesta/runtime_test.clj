@@ -1,10 +1,10 @@
-(ns metalisp.runtime-test
+(ns regesta.runtime-test
   "Tests for the rule execution engine: phase filtering, production merging,
    multi-cycle execution, pipeline runs, and trace queries."
   (:require [clojure.test :refer [deftest is testing]]
-            [metalisp.model :as model]
-            [metalisp.rules :as rules]
-            [metalisp.runtime :as rt]))
+            [regesta.model :as model]
+            [regesta.rules :as rules]
+            [regesta.runtime :as rt]))
 
 ;; ---------------------------------------------------------------------------
 ;; Fixtures

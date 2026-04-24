@@ -1,4 +1,4 @@
-(ns metalisp.diagnostics
+(ns regesta.diagnostics
   "Diagnostics API.
 
    Structured diagnostics, severities (`:error`, `:warning`, `:info`),

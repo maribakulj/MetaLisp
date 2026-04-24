@@ -1,9 +1,9 @@
-(ns metalisp.rules-test
+(ns regesta.rules-test
   "Tests for the rule DSL: schema validation, compilation, pattern
    matching, guards, production actions, and provenance tagging."
   (:require [clojure.test :refer [deftest is testing]]
-            [metalisp.model :as model]
-            [metalisp.rules :as rules]))
+            [regesta.model :as model]
+            [regesta.rules :as rules]))
 
 ;; ---------------------------------------------------------------------------
 ;; Helpers

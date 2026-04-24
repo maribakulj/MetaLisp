@@ -6,7 +6,7 @@
 ## Context
 
 The core must remain agnostic to any particular metadata standard. IIIF,
-Dublin Core, CIDOC CRM, MARC, Linked Art all enter MetaLisp as plugins;
+Dublin Core, CIDOC CRM, MARC, Linked Art all enter Regesta as plugins;
 none of them can be privileged.
 
 At the same time, a core with *zero* vocabulary is inoperable: cross-source
@@ -19,9 +19,9 @@ So we must decide: what vocabulary, if any, lives at the core?
 
 ## Decision
 
-MetaLisp distinguishes two layers of vocabulary.
+Regesta distinguishes two layers of vocabulary.
 
-**Structural vocabulary — at the core** (`metalisp.model`):
+**Structural vocabulary — at the core** (`regesta.model`):
 
 - `:meta/id`
 - `:meta/kind`
@@ -35,7 +35,7 @@ attached to it — not its documentary content. They are the minimal alphabet
 a generic engine needs to function at all.
 
 **Documentary vocabulary — in a standard plugin**
-(`metalisp.plugins.canonical`):
+(`regesta.plugins.canonical`):
 
 - `:canon/title`
 - `:canon/identifier`

@@ -1,19 +1,19 @@
-# MetaLisp
+# Regesta
 
 A documentary compiler for cultural metadata.
 
-MetaLisp ingests heterogeneous metadata records, normalizes them into a stable
+Regesta ingests heterogeneous metadata records, normalizes them into a stable
 internal representation, runs explicit validation, inference, and repair passes
 over that representation, and projects the result into one or more target
 formats — carrying diagnostics and provenance throughout.
 
 The architecture is deliberately modeled on a compiler: sources are parsed into
 an IR, the IR is transformed by explicit passes, and targets are emitted from
-the IR. MetaLisp does this for metadata rather than for code.
+the IR. Regesta does this for metadata rather than for code.
 
 ---
 
-## What MetaLisp is
+## What Regesta is
 
 - A **metadata transformation engine** with a stable, schema-independent core.
 - A **declarative rule system**: validation, inference, normalization, repair,
@@ -25,7 +25,7 @@ the IR. MetaLisp does this for metadata rather than for code.
   and proposed repairs are first-class citizens of the internal representation,
   not side channels.
 
-## What MetaLisp is not
+## What Regesta is not
 
 - A converter tied to a single standard.
 - An AI-first tool. The V1 stands on its own; LLM assistance is a deliberate
@@ -39,7 +39,7 @@ the IR. MetaLisp does this for metadata rather than for code.
 
 ### The internal representation
 
-Records in MetaLisp are **assertion sets**, not field maps. An assertion is:
+Records in Regesta are **assertion sets**, not field maps. An assertion is:
 
 ```clojure
 {:subject    :record/r42
@@ -55,7 +55,7 @@ Records in MetaLisp are **assertion sets**, not field maps. An assertion is:
 A record wraps an identity, a source pointer, an assertion set, a diagnostic
 set, and fragment pointers back into the raw source tree.
 
-This shape is what lets MetaLisp natively represent:
+This shape is what lets Regesta natively represent:
 
 - multiplicity (two candidate titles)
 - ambiguity (a date that is either 1823 or 1832)
@@ -82,7 +82,7 @@ expressed as **EDN data**. A rule:
 ```
 
 Rules are data — inspectable, serializable, composable. The compiler
-(`metalisp.rules`) turns them into executable functions. Rules cannot call
+(`regesta.rules`) turns them into executable functions. Rules cannot call
 arbitrary Clojure; they use a curated predicate stdlib.
 
 See [ADR 0002](./docs/adr/0002-edn-as-dsl.md).
@@ -105,7 +105,7 @@ The core ships only a **structural vocabulary** (`:meta/id`, `:meta/kind`,
 `:meta/source`, `:meta/fragment`, `:meta/diagnostic`, `:meta/provenance`). It
 knows nothing about documentary content.
 
-A separate, optional plugin — `metalisp.plugins.canonical` — provides a
+A separate, optional plugin — `regesta.plugins.canonical` — provides a
 **documentary vocabulary** (`:canon/title`, `:canon/identifier`, `:canon/agent`,
 `:canon/date`, `:canon/relation`, `:canon/note`, `:canon/digital-object`,
 `:canon/loss-marker`) that format plugins can map toward for cross-source rules
@@ -142,22 +142,22 @@ them for human acceptance or rejection. See
 
 ```
            ┌──────────────────────────────────────────────────────┐
-           │                     metalisp.app                     │
+           │                     regesta.app                     │
            │      CLI, config, batch I/O — no business logic      │
            └──────────────────────┬───────────────────────────────┘
                                   │
            ┌──────────────────────▼──────────────────────┐
-           │              metalisp.runtime               │
+           │              regesta.runtime               │
            │  pipeline · pass execution · diagnostics    │
            └───────┬─────────────────────┬───────────────┘
                    │                     │
          ┌─────────▼────────┐   ┌────────▼─────────┐
-         │  metalisp.rules  │   │ metalisp.model   │
+         │  regesta.rules  │   │ regesta.model   │
          │  DSL compiler    │   │  IR, vocabulary  │
          └─────────┬────────┘   └────────▲─────────┘
                    │                     │
          ┌─────────▼─────────────────────┴─────────┐
-         │             metalisp.plugins            │
+         │             regesta.plugins            │
          │  shape-json · shape-xml · dublin-core   │
          │  csv · marc-xml-lite · canonical · ...  │
          └─────────────────────────────────────────┘
@@ -173,7 +173,7 @@ The core never knows any external schema.
 ```
 .
 ├── deps.edn                 # Clojure deps and aliases
-├── src/metalisp/
+├── src/regesta/
 │   ├── model.clj            # Canonical IR (Sprint 1)
 │   ├── rules.clj            # Rule DSL + compiler (Sprint 2)
 │   ├── runtime.clj          # Execution engine (Sprint 3)
@@ -197,7 +197,7 @@ The core never knows any external schema.
 **Sprint 0 — Foundations.** This commit lays the scaffolding:
 
 - `deps.edn` with `:dev`, `:test`, `:lint`, `:fmt`, `:sandbox` aliases
-- Namespace skeleton under `src/metalisp/`
+- Namespace skeleton under `src/regesta/`
 - Smoke test ensuring all namespaces load
 - CI (GitHub Actions) running clj-kondo, cljfmt check, and the test suite
 - Six foundational ADRs in `docs/adr/`

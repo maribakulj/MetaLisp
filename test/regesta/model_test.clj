@@ -1,9 +1,9 @@
-(ns metalisp.model-test
+(ns regesta.model-test
   "Unit tests for the canonical model: schemas, constructors, predicates.
-   Round-trip behavior is covered by metalisp.model.round-trip-test."
+   Round-trip behavior is covered by regesta.model.round-trip-test."
   (:require [clojure.set :as set]
             [clojure.test :refer [deftest is testing]]
-            [metalisp.model :as model]))
+            [regesta.model :as model]))
 
 ;; ---------------------------------------------------------------------------
 ;; Structural vocabulary

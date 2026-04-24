@@ -1,6 +1,6 @@
 # Architecture Decision Records
 
-Structural decisions that shape the MetaLisp core. Each ADR is a standalone
+Structural decisions that shape the Regesta core. Each ADR is a standalone
 document: context, decision, consequences. New major decisions get their own
 ADR; supersessions are explicit, not silent edits.
 
