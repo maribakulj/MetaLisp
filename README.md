@@ -194,17 +194,20 @@ The core never knows any external schema.
 
 ## Current status
 
-**Sprint 0 — Foundations.** This commit lays the scaffolding:
+Sprints 0 through 4 are landed:
 
-- `deps.edn` with `:dev`, `:test`, `:lint`, `:fmt`, `:sandbox` aliases
-- Namespace skeleton under `src/regesta/`
-- Smoke test ensuring all namespaces load
-- CI (GitHub Actions) running clj-kondo, cljfmt check, and the test suite
-- Six foundational ADRs in `docs/adr/`
-- This README
+- **Sprint 0** — scaffolding, tooling, six foundational ADRs.
+- **Sprint 1** — canonical model with Malli schemas and EDN round-trip
+  (`regesta.model`).
+- **Sprint 2** — rule DSL with compiler, pattern matcher and predicate stdlib
+  (`regesta.rules`).
+- **Sprint 3** — execution engine, phase pipeline and trace queries
+  (`regesta.runtime`).
+- **Sprint 4** — diagnostics API: filters, aggregations, plain-text reporting
+  and a failure policy for CI/CLI integration (`regesta.diagnostics`).
 
-No business logic is implemented yet. The next sprint (Sprint 1) lands the
-canonical model with Malli schemas and EDN round-trip.
+The next sprint (Sprint 5) introduces the plugin protocol and the generic
+shape adapter for JSON and XML.
 
 ---
 
