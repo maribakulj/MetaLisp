@@ -1,6 +1,6 @@
 (ns regesta.loss-report
   "The conversion loss report (ADR 0015's headline deliverable, finally
-   assembled). The loss *producers* (frbrise, project, export, mapping) emit
+   assembled). The loss *producers* (intermarc.wemi, project, export, mapping) emit
    first-class loss diagnostics; this namespace aggregates them into the artifact
    an institution audits: a per-edge, per-category, **per-source-field** account
    of what a conversion did not carry across.

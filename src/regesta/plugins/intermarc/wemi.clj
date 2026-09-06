@@ -1,5 +1,5 @@
-(ns regesta.plugins.intermarc.frbrise
-  "INTERMARC → WEMI FRBRisation (WP-3, ADR 0016). A compiled `:infer` rule that
+(ns regesta.plugins.intermarc.wemi
+  "INTERMARC → WEMI derivation (WP-3, ADR 0016). A compiled `:infer` rule that
    reads `:intermarc/*` assertions and mints LRMoo entities, using the embedded
    authority link (the `f145_3` lookup validated in the WP-0 spike) — no fuzzy
    inference for authority-controlled records.
@@ -96,7 +96,7 @@
 (def mapped-source-fields
   "INTERMARC fields the current LRMoo projection represents. Every other
    `:intermarc/*` field a record carries is reported as loss (ADR 0015); as
-   FRBRisation grows (agents, more attributes, …) this set grows and loss
+   WEMI derivation grows (agents, more attributes, …) this set grows and loss
    shrinks — the loss report tracks the improvement."
   #{:intermarc/f145_3   ; -> F2_Expression id
     :intermarc/f145_a   ; -> Expression / Work title
@@ -131,17 +131,17 @@
     {:mapped m :total t :pct (if (pos? t) (quot (* 100 m) t) 0)}))
 
 (defn runner
-  "FRBRisation productions for one record: the WEMI projection plus a loss
+  "WEMI-derivation productions for one record: the WEMI projection plus a loss
    diagnostic per dropped source field (ADR 0015 / 0016)."
   [record]
   (into (wemi-productions record) (loss-productions record)))
 
 (def rule
-  "Compiled `:infer` FRBRisation rule (ADR 0016)."
-  (rules/compiled-rule {:id :rule.intermarc/frbrise :phase :infer :runner runner}))
+  "Compiled `:infer` WEMI-derivation rule (ADR 0016)."
+  (rules/compiled-rule {:id :rule.intermarc/derive-wemi :phase :infer :runner runner}))
 
-(defn frbrise
-  "Run INTERMARC FRBRisation over `record` (the `:infer` phase). Returns the
+(defn derive-wemi
+  "Run INTERMARC WEMI derivation over `record` (the `:infer` phase). Returns the
    enriched record — Manifestation/Expression entities and the R4 link."
   [record]
   (:record (runtime/run-phase record [rule] :infer)))

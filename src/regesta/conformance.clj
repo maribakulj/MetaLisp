@@ -154,7 +154,7 @@
    record, grounded in the public kitcat field model. Two hard essentials (a 001
    control number, a 245 title), three BnF expectations (the 003 ARK, an
    authority-linked 100 heading — Transition bibliographique, a 260 date), and the
-   145 Work-link as a FRBRisation-readiness hint."
+   145 Work-link as a WEMI-derivation-readiness hint."
   {:id    :intermarc
    :label "BnF INTERMARC (bibliographic)"
    :checks
@@ -180,7 +180,7 @@
      :conformant? #(has-field? % :intermarc/f260_d)}
     {:id :work-authority-link
      :severity :info
-     :message "no 145 $3 Work-authority link (f145_3) — not FRBRisable to a shared Work (ADR 0016)"
+     :message "no 145 $3 Work-authority link (f145_3) — no WEMI derivation to a shared Work (ADR 0016)"
      :conformant? #(has-field? % :intermarc/f145_3)}]})
 
 ;; ---------------------------------------------------------------------------

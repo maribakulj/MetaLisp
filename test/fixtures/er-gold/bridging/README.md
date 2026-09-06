@@ -1,6 +1,6 @@
 # ER gold — bridging (Work grouping *independent of f145*)
 
-The gold the C2 caveat asked for. `docs/eval/frbrisation-fidelity.md` notes that the
+The gold the C2 caveat asked for. `docs/eval/wemi-fidelity.md` notes that the
 C2 Bovary score is high because gold (`workManifested`) and input (`f145 $3`) are two
 serialisations of the **same** BnF work link — a transcription check, not a test of
 *bridging* (recovering the Work when the source carries **no** link). Independent

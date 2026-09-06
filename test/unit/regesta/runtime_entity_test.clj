@@ -23,9 +23,9 @@
                                          {:kind :entity :value e2}])]
       (is (= 1 (count (:entities r)))))))
 
-;; A realistic FRBRisation-style minting rule: a compiled-rule whose runner
+;; A realistic WEMI-derivation-style minting rule: a compiled-rule whose runner
 ;; computes a content-based id (mint-entity-id) and emits the Work entity plus
-;; a claim about it. This is the path WP-3 FRBRisation rules will use.
+;; a claim about it. This is the path WP-3 WEMI-derivation rules will use.
 (defn- minting-rule [key]
   (rules/compiled-rule
    {:id    :test/mint-work

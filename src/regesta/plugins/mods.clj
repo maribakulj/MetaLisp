@@ -111,7 +111,7 @@
          t  (children-named ti "title")
          :let [v (title-string ti t)] :when v]
      (assertion rid "title" v))
-   ;; the work's controlled title — <titleInfo type="uniform"> (the FRBRisation key)
+   ;; the work's controlled title — <titleInfo type="uniform"> (the WEMI-derivation key)
    (for [ti (children-named mods "titleInfo")
          :when (uniform-title-info? ti)
          t  (children-named ti "title")

@@ -31,7 +31,7 @@
    | `500/505/511/520 $a`                    | `:canon/note`        |
 
    Every rule trims (MARC subfields can carry significant padding, e.g. the `010`
-   LCCN). The richer `100 $3`-style authority FRBRisation INTERMARC enjoys has no
+   LCCN). The richer `100 $3`-style authority WEMI derivation INTERMARC enjoys has no
    MARC21 equivalent here, so MARC21 takes the floor projection (string-key
    identity), not the enriched one.
 

@@ -3,7 +3,7 @@
 - Status: Accepted
 - Date: 2026-06-01
 - Builds on: ADR 0001 (assertion IR), ADR 0013 (rich pivot), ADR 0014 (minting),
-  ADR 0016 (FRBRisation)
+  ADR 0016 (WEMI derivation)
 - Decision record: [`../wp0-decisions.md`](../wp0-decisions.md) (D3);
   [`../roadmap-v1.md`](../roadmap-v1.md) §10
 
@@ -78,7 +78,7 @@ agnosticism (ADR 0003) holds, and `structural-vocabulary` is unchanged.
 ## What this ADR does not decide
 
 - The `:kind` vocabulary (`:lrmoo/work` …) — plugin / WP-2.
-- The work-key composition feeding `mint-entity-id` — FRBRisation plugin / WP-3
+- The work-key composition feeding `mint-entity-id` — WEMI-derivation plugin / WP-3
   (D5).
 - The status of inferred assertions — settled by ADR 0005 / 0014: infer
   productions default to **`:proposed`** (the precision-first engine policy,

@@ -5,7 +5,7 @@
 - Extends: ADR 0003 (adds a second, richer documentary-vocabulary rung)
 - Builds on: ADR 0001 (assertion IR, preserved), ADR 0007 (plugins as data)
 - Detailed elsewhere: runtime minting (ADR 0011 amendment, forthcoming);
-  FRBRisation, identity, reconciliation (FRBRisation ADR, forthcoming); loss
+  WEMI derivation, identity, reconciliation (WEMI-derivation ADR, forthcoming); loss
   model (Loss-model ADR, forthcoming)
 - Decision record: [`../wp0-decisions.md`](../wp0-decisions.md) (D1, D2, D3);
   [`../roadmap-v1.md`](../roadmap-v1.md)
@@ -124,10 +124,10 @@ generalises to coverage rated at *both* rungs.
 - **Extend the assertion IR with LRMoo vocabulary but no typed view
   (strategy A).** Rejected. Rule ergonomics over deep WEMI / CRM chains stay
   awkward — ADR 0001 itself conceded deep traversal "is not the design target."
-  The derived view buys exactly that traversal ergonomics (for FRBRisation and
+  The derived view buys exactly that traversal ergonomics (for WEMI derivation and
   exporters) at low, additive cost.
 - **CIDOC-CRM alone as the pivot.** Rejected. It under-specifies the
-  bibliographic layer; FRBRisation (MARC → WEMI), the hardest and
+  bibliographic layer; WEMI derivation (MARC → WEMI), the hardest and
   highest-value transformation, would have to re-derive WEMI by hand — i.e.
   reinvent LRMoo informally. Better to adopt the standard that already
   harmonised them.
@@ -181,7 +181,7 @@ not read as shipped:
   (a Dublin Core record in JSON *and* XML converges on the same Work,
   `universal-pivot-integration-test`). The two-rung ladder degrades as decided —
   off the showcase a record yields a bare Manifestation view (measured,
-  `docs/eval/frbrisation-fidelity.md`).
+  `docs/eval/wemi-fidelity.md`).
 - **Not built** (named in Decision/Consequences as the *target*, not as done):
   - **Turtle / JSON-LD** — only N-Triples ships (the parenthetical "(JSON-LD,
     Turtle)" in Consequences is aspirational; they are thin follow-ons over the
@@ -194,16 +194,16 @@ not read as shipped:
   - the broader **CRM object core** beyond WEMI — the shipped subset is WEMI-only;
   - the projection minted from `:canon/*` (`lrmoo.project`) is generic, but the
     *enriched* projection that exploits native authority links remains
-    INTERMARC-specific (`intermarc/frbrise`); other spokes get the floor view.
+    INTERMARC-specific (`intermarc.wemi`); other spokes get the floor view.
 
 ## What this ADR does not decide
 
 - Runtime minting semantics — **ADR 0011 amendment** (forthcoming; D4).
 - Synthesized-entity identity, clustering, and reconciliation scope —
-  **FRBRisation ADR** (forthcoming; D5 / D6 / D11), with the identity scheme
+  **WEMI-derivation ADR** (forthcoming; D5 / D6 / D11), with the identity scheme
   extending ADR 0012.
-- FRBRisation control (automatic vs human-in-the-loop) — **FRBRisation ADR**
-  (forthcoming; D7).
+- WEMI-derivation control (automatic vs human-in-the-loop) — **WEMI-derivation
+  ADR** (forthcoming; D7).
 - The loss model (unit, edges, metric) — **Loss-model ADR** (forthcoming; D9).
 - The exact LRMoo class / predicate subset and the exact R-properties against
   the LRMoo v1.0 specification — fixed during WP-2, grown by justification (D2).

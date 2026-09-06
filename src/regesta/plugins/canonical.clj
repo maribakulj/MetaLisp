@@ -58,10 +58,10 @@
 
    `:canon/uniform-title` is the ninth, added 2026-06-06 under the growth
    discipline for a concrete, measured use case: the cataloguer's controlled
-   work title (MARC 240, MODS/UNIMARC uniform title) is the FRBRisation Work key
+   work title (MARC 240, MODS/UNIMARC uniform title) is the WEMI-derivation Work key
    that unifies an edition's transcribed-title variants — the floor projection
    keys the Work on it when present, raising recall against an independent gold
-   (`docs/eval/bibr-frbrisation.md`). It describes *what the work is*, distinct
+   (`docs/eval/bibr-work-clustering.md`). It describes *what the work is*, distinct
    from `:canon/title` (the manifestation's transcribed title)."
   #{:canon/title
     :canon/uniform-title

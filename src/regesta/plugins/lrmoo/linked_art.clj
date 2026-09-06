@@ -12,7 +12,7 @@
      F2 Expression     ->  LinguisticObject  --part_of-->  PropositionalObject
      F1 Work           ->  PropositionalObject
 
-   The three FRBR levels stay three distinct Linked Art resources (no collapse —
+   The three LRM levels stay three distinct Linked Art resources (no collapse —
    Linked Art is *more* precise here than plain CRM, which makes F2/F3 both E73).
 
    Field patterns (each from a Getty AAT-classified example):

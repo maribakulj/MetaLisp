@@ -1,6 +1,6 @@
 (ns regesta.eval.bovary-c2-test
-  "C2 fidelity eval (ADR 0016): does INTERMARC FRBRisation reproduce data.bnf.fr's
-   own FRBR Work grouping? Scored as pairwise precision/recall against a gold
+  "C2 fidelity eval (ADR 0016): does INTERMARC WEMI derivation reproduce
+   data.bnf.fr's own Work grouping? Scored as pairwise precision/recall against a gold
    derived from data.bnf's `rdarel:workManifested`
    (see test/fixtures/c2-gold/bovary/README.md).
 
@@ -13,7 +13,7 @@
   (:require [clojure.string :as str]
             [clojure.test :refer [deftest is testing]]
             [regesta.plugins.intermarc :as intermarc]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.lrmoo.view :as view]))
 
 (def fixture
@@ -21,7 +21,7 @@
 (def gold-csv "test/fixtures/c2-gold/bovary/workmanifested.csv")
 
 (def records (intermarc/ingest (slurp fixture) {}))
-(def frbrised (mapv frbrise/frbrise records))
+(def derived (mapv wemi/derive-wemi records))
 
 (defn- parse-gold
   "`sourceArk -> work-URI` from the gold CSV (header dropped). The CSV is quoted
@@ -42,7 +42,7 @@
 ;; --- clustering ------------------------------------------------------------
 
 (defn- our-key
-  "The id our FRBRisation groups `r` under: its Work, else its Expression, else its
+  "The id our WEMI derivation groups `r` under: its Work, else its Expression, else its
    Manifestation (a singleton). All content-derived, so equal across records that
    share the same authority link (ADR 0008)."
   [r]
@@ -88,7 +88,7 @@
       (is (str/includes? (first (vals gold)) "cb11938746n")))))
 
 (deftest our-clustering-matches-the-gold-work-grouping
-  (let [by-ark  (into {} (map (juxt :source identity)) frbrised)
+  (let [by-ark  (into {} (map (juxt :source identity)) derived)
         arks    (keys by-ark)
         gold-of gold-key
         ours-of (fn [ark] (our-key (by-ark ark)))
@@ -116,7 +116,7 @@
   (testing "records without f145_3 are not in the gold cluster, and we don't invent one"
     (doseq [ark ["ark:/12148/cb32056819r"   ; \"Le Réalisme. Madame Bovary…\" — a different Work
                  "ark:/12148/cb48756313f"]] ; \"Madame Bovary\" — no link in source nor gold
-      (let [r (first (filter #(= ark (:source %)) frbrised))]
+      (let [r (first (filter #(= ark (:source %)) derived))]
         (is (nil? (get gold ark)))                ; absent from the gold cluster
         (is (empty? (view/works r)))              ; ...and we mint no Work
         (is (= 1 (count (view/manifestations r))))))))

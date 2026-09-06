@@ -64,7 +64,7 @@ cargo-culted `dev` extra-path (CHANGELOG › Removed).
 - **Core (4):** `model`, `rules`, `runtime`, `diagnostics`.
 - **Plugin infra (6):** `plugins`, `plugins.transforms`, `plugins.mapping`, `plugins.shape`, `plugins.canonical`, `text`.
 - **Spokes (8 importers):** `intermarc`, `marc21`, `unimarc`, `marcxml`, `dc`, `mods`, `iiif`, `intermarc-ng`.
-- **Pivot + exporters (12):** `lrmoo`, `lrmoo.project`, `lrmoo.view`, `lrmoo.crm`, `lrmoo.export`, `lrmoo.linked-art`, `lrmoo.crm-import`, `intermarc.frbrise`; `dc.export`, `marc21.export`, `mods.export`, `iiif.export`.
+- **Pivot + exporters (12):** `lrmoo`, `lrmoo.project`, `lrmoo.view`, `lrmoo.crm`, `lrmoo.export`, `lrmoo.linked-art`, `lrmoo.crm-import`, `intermarc.wemi`; `dc.export`, `marc21.export`, `mods.export`, `iiif.export`.
 - **Pipeline + entry (8):** `convert`, `validate`, `conformance`, `curate`, `reconcile`, `loss-report`, `spokes`, `cli`.
 - **CI:** `test/junit/regesta/junit_runner.clj` (drives the JUnit CI job — *not* dead).
 - **ADRs:** all 19 (0001–0019, Accepted).
@@ -88,7 +88,7 @@ cargo-culted `dev` extra-path (CHANGELOG › Removed).
 2. **`README.md`** — half-updated: it carries the redefinition note + the accurate
    scope-reversal, but still **foregrounds the old 12-sprint plan** and a
    Sprint-labelled structure diagram, and **omits** the delivered surface
-   (conformance, streaming, curation, the 8 spokes, the loss report, FRBRisation,
+   (conformance, streaming, curation, the 8 spokes, the loss report, WEMI derivation,
    the CLI verbs). DoD #7 → restructure so the **rich-pivot V1 is primary** and the
    sprint history is clearly historical.
 3. **`docs/roadmap-v1.md`** — the "Current state (2026-06-03)" header is date-stale

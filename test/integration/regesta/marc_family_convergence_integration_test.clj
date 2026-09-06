@@ -7,7 +7,7 @@
    - the **flat** dialects (UNIMARC, MARC21, with DC/MODS) take the floor projection
      (string key), so records of the same creator+title — *whatever the dialect* —
      mint the **same** content-addressed Work id;
-   - the **entity** rungs (INTERMARC via `frbrise`'s 145 link, INTERMARC-NG read
+   - the **entity** rungs (INTERMARC via `derive-wemi`'s 145 link, INTERMARC-NG read
      graph→graph) reach the same WEMI *shape* but keep their own authority/ARK
      identity. They are **not** collapsed onto the floor's string key — doing so is
      name-form reconciliation, the ADR 0018 recall ceiling, deliberately not claimed.
@@ -18,7 +18,7 @@
             [regesta.plugins :as plug]
             [regesta.plugins.intermarc :as intermarc]
             [regesta.plugins.intermarc-ng :as intermarc-ng]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.lrmoo.project :as project]
             [regesta.plugins.lrmoo.view :as view]
             [regesta.plugins.mapping :as mapping]
@@ -89,8 +89,8 @@
   (testing "every MARC-family route reaches a Manifestation in the LRMoo pivot"
     (let [uni (floor-project unimarc/plugin {} unimarc-miserables)
           m21 (floor-project marc21/plugin {} marc21-miserables)
-          im  (frbrise/frbrise (->> (intermarc/importer {} {:source/kind :file :source/value intermarc-fixture})
-                                    :records (filter #(= "ark:/12148/cb304403926" (:source %))) first))
+          im  (wemi/derive-wemi (->> (intermarc/importer {} {:source/kind :file :source/value intermarc-fixture})
+                                     :records (filter #(= "ark:/12148/cb304403926" (:source %))) first))
           ng  (first (intermarc-ng/ingest ng-fixture {}))]
       (doseq [[label w] [["unimarc" uni] ["marc21" m21] ["intermarc" im] ["intermarc-ng" ng]]]
         (is (= 1 (count (view/manifestations w))) (str label " reaches a Manifestation"))))))
@@ -122,8 +122,8 @@
         (testing "the NG Work is the authority ARK entity; the floor Work is content-addressed"
           (is (= "http://data.bnf.fr/ark:/12148/cb11947964w" (:iri (first (view/works ng)))))
           (is (nil? (:iri (first (view/works uni)))))))))             ; floor mints no authority iri
-  (testing "INTERMARC's frbrise rung likewise keeps authority identity (the 145 link), not a string key"
-    (let [im (frbrise/frbrise (->> (intermarc/importer {} {:source/kind :file :source/value intermarc-fixture})
-                                   :records (filter #(= "ark:/12148/cb304403926" (:source %))) first))]
+  (testing "INTERMARC's derive-wemi rung likewise keeps authority identity (the 145 link), not a string key"
+    (let [im (wemi/derive-wemi (->> (intermarc/importer {} {:source/kind :file :source/value intermarc-fixture})
+                                    :records (filter #(= "ark:/12148/cb304403926" (:source %))) first))]
       (is (= 1 (count (view/works im))))
       (is (some? (:iri (first (view/manifestations im))))))))         ; the ARK, not a urn:regesta string key

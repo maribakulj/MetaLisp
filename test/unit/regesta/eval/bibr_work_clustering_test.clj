@@ -1,10 +1,10 @@
-(ns regesta.eval.bibr-frbrisation-test
-  "Independent FRBRisation eval — Regesta's MARC21 → WEMI Work clustering measured
+(ns regesta.eval.bibr-work-clustering-test
+  "Independent WEMI-derivation eval — Regesta's MARC21 → WEMI Work clustering measured
    against the **BIB-R** benchmark gold (a third-party 'Benchmark of FRBRization
    solutions', bib-r.github.io, CC BY-NC). See `test/fixtures/bibr-gold/README.md`
    for provenance, derivation and licence.
 
-   Why this matters: `docs/eval/frbrisation-fidelity.md` records that the C2 score
+   Why this matters: `docs/eval/wemi-fidelity.md` records that the C2 score
    is high only because the gold (`workManifested`) and the input (`f145 $3`) are
    two serialisations of the *same* BnF link — a transcription check, not evidence
    of inference — and closes with: 'Independent evaluation of bridging will need a

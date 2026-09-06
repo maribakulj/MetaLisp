@@ -1,6 +1,6 @@
-# FRBRisation fidelity — measured against data.bnf.fr ground truth
+# WEMI-derivation fidelity — measured against data.bnf.fr ground truth
 
-This records what INTERMARC → WEMI FRBRisation (WP-3, ADR 0016) actually does on
+This records what INTERMARC → WEMI derivation (WP-3, ADR 0016) actually does on
 real BnF data, measured two ways and reproducible from committed fixtures:
 
 - **C2 (fidelity, on the showcase)** — `regesta.eval.bovary-c2-test`
@@ -13,7 +13,7 @@ Run both with `clojure -M:sandbox:test/unit`.
 ## 0. A correction: the GET → POST false negative
 
 An earlier scoped C2 probe reported **0** `workManifested` matches for our ARKs and
-I concluded data.bnf.fr published no FRBR Work links for our records — that the
+I concluded data.bnf.fr published no Work links for our records — that the
 avenue was exhausted. **That conclusion was wrong: a false negative.** The SPARQL
 `VALUES` join is several KB; sent on the query string of a **GET** it was
 truncated/rejected and returned nothing. Re-issued as a SPARQL **POST**, the same
@@ -24,11 +24,11 @@ The corrected ground truth is committed at `test/fixtures/c2-gold/bovary/`
 
 ## 1. C2 — fidelity on the Madame Bovary showcase
 
-**Gold.** data.bnf.fr's own FRBR grouping via `rdarel:workManifested`, scoped to
+**Gold.** data.bnf.fr's own Work grouping via `rdarel:workManifested`, scoped to
 the ARKs in our fixtures: **28 manifestations → 1 Work**,
 `http://data.bnf.fr/ark:/12148/cb11938746n#about` ("Madame Bovary").
 
-**System.** FRBRise the 30 records of
+**System.** Derive WEMI over the 30 records of
 `bib-flaubert-madame-bovary-start1-max30.xml`; cluster each by the Work it is
 linked to (Manifestation —R4→ Expression ←R3— Work), falling back to a singleton.
 
@@ -70,7 +70,7 @@ monographs, periodicals, youth, music recordings, two analytic sets):
 | **showcase** (Bovary) |      30 |             28 |          28 |     1 |
 | **off-showcase** (8)  |     220 |              0 |           0 |     0 |
 
-Outside the showcase, **0 / 220** records carry the link, so FRBRisation degrades
+Outside the showcase, **0 / 220** records carry the link, so WEMI derivation degrades
 to a **bare F3_Manifestation** — no Expression, no Work. Across all committed
 bibliographic fixtures, projection beyond a Manifestation reaches **28 / 250 ≈
 11.2 %** of records, and every one of those belongs to the *single* showcase Work.
@@ -81,7 +81,7 @@ correctly yields 0 records, not a parse failure.)
 
 ## 3. Bilan
 
-- **Validated.** On records that carry the embedded Work link, FRBRisation is
+- **Validated.** On records that carry the embedded Work link, WEMI derivation is
   faithful and stable: 28 editions → 1 Work, P = R = 1.0, idempotent, no spurious
   splits or merges. The importer + identity + clustering path has no regression on a
   real, heterogeneous cluster.
@@ -106,9 +106,9 @@ correctly yields 0 records, not a parse failure.)
   stress variant-title recall on an independent gold — the broad clean Work gold
   ADR 0018 says does not exist in open sources.
 - **Variant-title recall now stressed on an independent gold** —
-  [`bibr-frbrisation.md`](./bibr-frbrisation.md), `regesta.eval.bibr-frbrisation-test`.
+  [`bibr-work-clustering.md`](./bibr-work-clustering.md), `regesta.eval.bibr-work-clustering-test`.
   The third-party **BIB-R** FRBRization benchmark (CC BY-NC, no `f145` dependence)
-  supplies the broad, hand-curated MARC→FRBR gold the bullet above lacked: 560
+  supplies the broad, hand-curated MARC → Work gold the bullet above lacked: 560
   records whose gold Works unify transcribed-title variants/translations/abridgements.
   Over the title-joinable subset (362 / 560), Regesta scores **P = 1.000** with
   **uniform-title bridging lifting recall 0.775 → 0.823** (MARC 240 →

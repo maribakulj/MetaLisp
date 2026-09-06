@@ -4,7 +4,7 @@
 
    A pipeline's `:infer`/`:repair` phases emit assertions as `:proposed` (the
    string-key WEMI inference in `regesta.plugins.lrmoo.project`, the creator-only
-   Work in `intermarc.frbrise`, the fuzzy reconciliation tier of ADR 0018): claims
+   Work in `intermarc.wemi`, the fuzzy reconciliation tier of ADR 0018): claims
    the machine generated but did not auto-confirm. Curation is the human (or
    policy) step that resolves each pending claim into the *workflow* family
    (ADR 0005):

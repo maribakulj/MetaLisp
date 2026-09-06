@@ -5,7 +5,7 @@
 - Supersedes: the twelve-sprint roadmap table in [`README.md`](../README.md) (§ Roadmap)
 - Builds on (kept): ADR 0001, 0002, 0003, 0005, 0007, 0009, 0010, 0012
 - Amends / reopens: ADR 0004 (fixpoint — since resolved by D8, then ADR 0020), ADR 0008 (idempotency), ADR 0011 (minting)
-- Introduces (WP-0): a Pivot ADR, a Loss-model ADR, a FRBRisation ADR, a Conformance ADR
+- Introduces (WP-0): a Pivot ADR, a Loss-model ADR, a WEMI-derivation ADR, a Conformance ADR
 
 > How to read this. Work packages are **dependency-ordered**; each carries an
 > explicit **gate** (exit criterion) and the ADRs it touches. Nothing here is
@@ -32,7 +32,7 @@ loss-aware conversion hub** usable by flagship institutions (BnF, Louvre):
 This **reverses an explicit V1 boundary.** Today `README.md` lists
 IIIF, CIDOC CRM, Linked Art **and deduplication** as *deliberately out of
 scope* for V1. The redefinition pulls all four in. (Deduplication arrives
-implicitly: cross-record Work clustering is the heart of FRBRisation —
+implicitly: cross-record Work clustering is the heart of WEMI derivation —
 see WP-3.)
 
 It also **cashes in an option the team already bought.** `README.md`
@@ -58,7 +58,7 @@ rich pivot is the intended evolution path, not a detour.
 
 - **ADR 0011** — lift the *ingest-only* restriction on fragment/entity minting:
   `infer`/`repair` rules must be able to **mint** synthesized entities
-  (FRBRisation needs to create Work/Expression nodes that exist in no source).
+  (WEMI derivation needs to create Work/Expression nodes that exist in no source).
 - **ADR 0008** — synthesized-entity identity must be a **deterministic
   function of source content**, so re-running an idempotent merge produces no
   duplicate entities. Minting and idempotency are reconciled here.
@@ -66,7 +66,7 @@ rich pivot is the intended evolution path, not a detour.
   may require iterating until no new entities appear. WP-0 decides whether V1
   keeps fixed passes (with a bounded iteration count) or admits a scoped
   fixpoint for the `infer` phase. *Resolved:* WP-0 chose bounded fixed passes
-  (D8); the FRBRisation spike then found the inference cascade unexercised
+  (D8); the WEMI-derivation spike then found the inference cascade unexercised
   (explicit Work links are sparse), so ADR 0020 simplified the runtime to a
   **single pass per phase** — re-introduce bounded iteration only if a future
   Work-synthesis spike forces it.
@@ -113,13 +113,13 @@ would reopen the C-vs-typed-core-IR choice; as long as 0003 stands, C stands.
 Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
 **gate** that must be green before downstream WPs build on it.
 
-### WP-0 — Design lock + FRBRisation spike
+### WP-0 — Design lock + WEMI-derivation spike
 - **Goal:** settle the load-bearing decisions in ADRs before writing engine code.
 - **Deliverables:** Pivot ADR (C + LRMoo, with the 0003 dependency stated);
   ADR 0011 amendment (runtime minting); ADR 0008 reconciliation (deterministic
   synthesized identity); ADR 0004 decision (fixpoint vs bounded passes);
-  Loss-model ADR; FRBRisation ADR; Conformance ADR; rewrite of the `README.md`
-  roadmap + out-of-scope sections. **Throwaway FRBRisation spike** on a small
+  Loss-model ADR; WEMI-derivation ADR; Conformance ADR; rewrite of the `README.md`
+  roadmap + out-of-scope sections. **Throwaway WEMI-derivation spike** on a small
   real MARC sample to de-risk WP-3 before committing the plan.
 - **Depends on:** nothing (kicks off the program).
 - **Gate:** ADRs reviewed and at least Proposed; the spike demonstrates a
@@ -148,12 +148,13 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
 - **Gate:** assertions ↔ LRMoo view round-trips; the view is provably derived
   (regenerating it from assertions is idempotent and side-effect-free).
 
-### WP-3 — FRBRisation engine  *(highest technical risk)*
+### WP-3 — WEMI-derivation engine  *(highest technical risk)*
 - **Goal:** synthesize WEMI from flat catalogue data.
 - **Deliverables:** `infer`/`repair` rule sets that derive Work/Expression/
   Manifestation/Item and their R-relations from MARC records; **cross-record
   Work clustering** (same Work across many manifestations → one minted Work,
-  stable identity); loss accounting for ambiguous or un-FRBRisable cases.
+  stable identity); loss accounting for ambiguous cases and cases that admit no
+  WEMI derivation.
 - **Depends on:** WP-1, WP-2; informed by the WP-0 spike.
 - **Gate:** on a real MARC corpus, MARC→WEMI with a published fidelity metric
   and loss report; idempotent identity verified at scale (re-run mints nothing).
@@ -164,7 +165,7 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
   1. **Dublin Core** (in/out) — simplest; the end-to-end *pipe-cleaner* that
      validates the pivot with low complexity. Keep from the original Sprint 7.
   2. **MARC21 real** (in/out) — full fields/subfields, not lite; the highest-
-     value spoke (BnF). Couples to WP-3 via FRBRisation.
+     value spoke (BnF). Couples to WP-3 via WEMI derivation.
   3. **IIIF Presentation** (in) — import manifests; link digital objects to
      pivot entities (`:canon/digital-object`).
   4. **CIDOC-CRM / Linked Art** (out, maybe in) — museum spoke; Linked Art as
@@ -228,7 +229,7 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
 | WP-0 design lock + spike | ✅ |
 | WP-1 substrate (minting, loss diagnostic) | ✅ |
 | WP-2 LRMoo plugin + view | ✅ |
-| WP-3 FRBRisation (INTERMARC; clustering = id-collision; loss) | ✅ |
+| WP-3 WEMI derivation (INTERMARC; clustering = id-collision; loss) | ✅ |
 | WP-4 spokes | ◐ — **7 importers in ✅**: INTERMARC-SRU, **INTERMARC-NG** (entity-relation, ADR 0019), **UNIMARC** (BnF diffusion — the MARC family complete), MARC21 (MARCXML), Dublin Core, MODS (nested), IIIF Presentation 3.0 (JSON); **4 round-trips ✅** (DC + MARC21 + MODS + IIIF ↔ floor — every floor spoke now round-trips; loss measured, id-stable & idempotent; INTERMARC is import-only by design, the rich-pivot source); shared `marcxml` core; 4-spoke convergence capstone; canonical→WEMI floor ✅; **RDF out in all three serialisations ✅** (N-Triples · Turtle · JSON-LD, LRMoo + CRM views); **Linked Art profile out ✅** (museum/Louvre target — F3→HumanMadeObject carries F2→LinguisticObject part_of F1→PropositionalObject, mapping verified vs the official examples, `docs/eval/linked-art.md`); **Linked Art now validated against the official draft-2020-12 schema** (real `networknt` validator, `$ref`-resolved — DoD #4: our roots are schema-valid, our only deviations are `additionalProperties` from embedding, *cleaner* than Getty's own Mona Lisa example which the strict schema also rejects); both LoC XSLT oracles in (MARC→DC differential, MARC→MODS convergence); **MARC21↔LRMoo at the *floor* level** |
 | WP-5 loss-aware report | ✅ (cross-edge double-count fixed in remediation R3) |
 | WP-8 CLI | ✅ — `regesta convert` / **`validate`** (canonical rules, policy-driven non-zero exit) / **`report`** (X→Y loss report alone) / **`inspect`** (the parsed canonical floor + minted WEMI/agent entities) / **`reconcile`** (cross-record agent reconciliation by authority id, ADR 0018) / **`apply-repairs`** (curate the inferred `:proposed` claims — the ADR 0005 repair-application engine `regesta.curate`: a pure decision function resolves each pending proposal to `:accepted`/`:rejected`/`:needs-review`; `flag`/`accept`/`reject` policies compose an ADR 0018 promotion guard) / **`conformance`** (check the WEMI projection against an institutional profile — WP-6 mechanism `regesta.conformance`; exits non-zero under the acceptance-threshold policy) / `formats` (`regesta.cli`, `:run` alias) over the conversion assembly |
@@ -281,7 +282,7 @@ re-skin of the twelve-sprint plan. Ranges, not points:
 |------|----------------|-----------|
 | 0 — Design lock + de-risk | WP-0 | 1–2 mo |
 | 1 — Substrate + pivot | WP-1, WP-2 (+ DC pipe-cleaner) | 3–4 mo |
-| 2 — FRBRisation + MARC21 | WP-3, WP-4 (MARC) | 4–6 mo |
+| 2 — WEMI derivation + MARC21 | WP-3, WP-4 (MARC) | 4–6 mo |
 | 3 — Remaining spokes + loss | WP-4 (IIIF/CRM/LRMoo), WP-5 | 3–4 mo |
 | 4 — Conformance + scale | WP-6, WP-7 | 3–4 mo |
 | 5 — CLI + hardening + release | WP-8, WP-9 | 2–3 mo |
@@ -296,7 +297,7 @@ an external dependency (§ 7) that no amount of engineering removes.
 
 | # | Risk | Severity | Mitigation |
 |---|------|----------|-----------|
-| R1 | **FRBRisation fidelity** — cross-record Work clustering is the hardest single problem (and was explicitly out of V1 scope as "deduplication"). | High | De-risk with the WP-0 spike *before* committing; treat fidelity as a measured metric, not a binary. |
+| R1 | **WEMI-derivation fidelity** — cross-record Work clustering is the hardest single problem (and was explicitly out of V1 scope as "deduplication"). | High | De-risk with the WP-0 spike *before* committing; treat fidelity as a measured metric, not a binary. |
 | R2 | **Minting vs idempotency (0008)** — synthesized identity must be deterministic or merges duplicate/thrash. | High | Identity = pure function of source content; property tests in WP-1. |
 | R3 | **Fixpoint pressure (0004)** — WEMI inference may need iteration; V1 principle is "no fixpoint." | Medium | *Resolved:* WP-0 chose bounded passes (D8); ADR 0020 then settled on a single pass per phase — the spike showed the inference cascade unexercised. Re-add iteration only if a Work-synthesis spike forces it. |
 | R4 | **Real-data dependency** — "prod-ready" is unverifiable without institutional data + a conformance oracle. | High | Secure a data/conformance partnership early (§ 7); gates WP-3/4/6. |
@@ -323,7 +324,7 @@ V1 is done when, on **real institutional samples**:
 
 1. **MARC21 ↔ LRMoo** round-trips with a published loss report and a stated
    statement-coverage percentage.
-2. **FRBRisation** yields stable WEMI identities — an idempotent re-run mints
+2. **WEMI derivation** yields stable WEMI identities — an idempotent re-run mints
    no new entities — verified on a real corpus.
 3. **IIIF** manifests import and link to pivot entities.
 4. Export to **CIDOC-CRM / Linked Art** JSON-LD validates against a museum
@@ -367,9 +368,9 @@ It is a ladder, not a binary; each rung adds value *and* operational burden:
 | 4 | Editable / curated (humans accept/merge/split; decisions persist) | hard — becomes a web app with users |
 | 5 | Authoritative / cross-institution convergence hub | hardest — identity lifecycle, governance |
 
-**What it serves:** a living catalogue (continuous FRBRisation, à la BnF
+**What it serves:** a living catalogue (continuous WEMI derivation, à la BnF
 Transition bibliographique); cumulative cross-source reconciliation; curation of
-the FRBRisation tail at scale; serving the graph (a data.bnf.fr-like platform);
+the WEMI-derivation tail at scale; serving the graph (a data.bnf.fr-like platform);
 audit over time. The most original niche is **rung 5 — the cross-institution
 convergence layer**: each institution has its own store, but nobody owns the
 convergence *between* them.

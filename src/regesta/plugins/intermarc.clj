@@ -15,7 +15,7 @@
    Tags and subfield codes are numeric, so predicate *names* are prefixed `f`
    (`:intermarc/f145_3`): a keyword name may not start with a digit, and an
    un-prefixed `:intermarc/145_3` would not round-trip through EDN (ADR 0001).
-   This subfield granularity is exactly what FRBRisation reads — `f145_3` is the
+   This subfield granularity is exactly what WEMI derivation reads — `f145_3` is the
    embedded Work-authority link, `f100_3` the author's, `f245_a` the title.
 
    Like every plugin (ADR 0007) this exposes an `:importer` closure; the core
@@ -75,7 +75,7 @@
 
 (def mapping
   "INTERMARC→canonical mapping for the bibliographic core. INTERMARC reaches the
-   WEMI pivot through the *enriched* `frbrise` rung (the 145 $3 authority link),
+   WEMI pivot through the *enriched* `derive-wemi` rung (the 145 $3 authority link),
    not the floor projection — but populating `:canon/*` too lets the round-trip
    exporters (DC, MARC21) and the Linked Art creator read off it. The agent is the
    *controlled* 100 main entry, **recombined declaratively** from its subfields —
@@ -83,7 +83,7 @@
    `:mapping/combine` rule, not the transcribed 245 $f responsibility statement
    (which can be compound — multiple names and roles). The 100 authority link
    (BnF id / ISNI) is not carried: the floor is string-only (ADR 0003); that
-   identity lives on the enriched `frbrise` rung."
+   identity lives on the enriched `derive-wemi` rung."
   [{:mapping/id :map/intermarc-title :mapping/from :intermarc/f245_a :mapping/to :canon/title
     :mapping/transform [:trim]}
    {:mapping/id :map/intermarc-agent
@@ -98,7 +98,7 @@
 
 (def plugin
   "The INTERMARC-SRU importer plugin (ADR 0007). Ships `:mapping` (used to populate
-   the canonical floor alongside `frbrise`'s enriched WEMI) and the `:importer`."
+   the canonical floor alongside `derive-wemi`'s enriched WEMI) and the `:importer`."
   {:plugin/spec-version 1
    :id                  :regesta/intermarc
    :input-format        :xml

@@ -5,13 +5,13 @@
 
    This is the namespace that wires the parts the rest of the system built and the
    convergence capstone proved compose: the five importers, the two projection
-   rungs (INTERMARC's enriched `frbrise`, the floor `project` for the others), and
+   rungs (INTERMARC's enriched `derive-wemi`, the floor `project` for the others), and
    the ten exporters. `convert` returns the output string plus the conversion
    loss report, in one call.
 
    Loss is collected at three points and merged: import-edge (a spoke's
    report-at-ingest, e.g. Dublin Core / MODS / IIIF unmodelled elements), the
-   projection edge (canonical fields with no WEMI home, frbrise loss), and the
+   projection edge (canonical fields with no WEMI home, WEMI-derivation loss), and the
    export edge (what the chosen target cannot express). The per-edge, per-field
    account is exactly `regesta.loss-report`'s artifact."
   (:require [clojure.string :as str]
@@ -20,7 +20,7 @@
             [regesta.plugins :as plug]
             [regesta.plugins.dc.export :as dc-export]
             [regesta.plugins.iiif.export :as iiif-export]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.lrmoo.crm :as crm]
             [regesta.plugins.lrmoo.export :as export]
             [regesta.plugins.lrmoo.linked-art :as linked-art]
@@ -39,12 +39,12 @@
 
 (def ^:private to-pivots
   "Source format -> the projection that lifts a normalised record to WEMI.
-   INTERMARC takes the *enriched* `frbrise` rung (the 145 $3 authority link) and
+   INTERMARC takes the *enriched* `derive-wemi` rung (the 145 $3 authority link) and
    then mints its authority-identified agent; INTERMARC-NG is already an entity-
    relation graph, so its importer builds the WEMI view and the projection is
    `identity` (ADR 0019); the floor spokes take `project`. Every spoke normalises
    to `:canon/*` first (in `to-wemi`)."
-  {:intermarc    (comp frbrise/with-identified-agent frbrise/frbrise)
+  {:intermarc    (comp wemi/with-identified-agent wemi/derive-wemi)
    :intermarc-ng identity        ; the WEMI graph is read by the importer, not projected
    :unimarc      project/project
    :dc           project/project
@@ -108,7 +108,7 @@
 
 (defn to-wemi
   "Import `source` through `spoke`, normalise to the canonical floor, then project
-   each record to WEMI by the appropriate rung — INTERMARC's enriched `frbrise`
+   each record to WEMI by the appropriate rung — INTERMARC's enriched `derive-wemi`
    (via the 145 $3 link) or the floor `project`. Both run normalize first, so
    `:canon/*` is populated for every spoke (the round-trip exporters read it).
    Returns `{:records [wemi…] :ingest [loss…]}`."

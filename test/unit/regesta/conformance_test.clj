@@ -130,7 +130,7 @@
   (let [run (fn [file] (conf/conformance {:from :intermarc :profile conf/intermarc-profile
                                           :source (slurp (str imarc-dir file))}))
         n   (fn [diags code] (count (filter #(= code (:code %)) diags)))]
-    (testing "the FRBRised Bovary showcase is conformant — 1 unlinked heading + 2 work-link infos"
+    (testing "the WEMI-derived Bovary showcase is conformant — 1 unlinked heading + 2 work-link infos"
       (let [{:keys [failed? diagnostics records]} (run "bib-flaubert-madame-bovary-start1-max30.xml")]
         (is (= 30 records))
         (is (false? failed?))
