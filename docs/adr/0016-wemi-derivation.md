@@ -77,7 +77,7 @@ The scale layer for this inference — reconcile-to-authority, equivalence as
 assertion, revisability — is decided in **ADR 0018**.)
 
 ### 3. Clustering is batch-local, stabilised by deterministic identity (D6)
-Works / agents are clustered **within a run**; Regesta keeps no persistent
+Works / agents are clustered **within a run**; Palomar keeps no persistent
 store. Cross-run and cross-institution consistency comes *for free* from the
 deterministic id + authority IRIs (same content / authority → same id), not from
 shared state — preserving the "not a storage system" principle. Honest limit:
@@ -153,7 +153,7 @@ proves it necessary, ADR 0020 re-admits it as an explicit phase mode.
 
 - WEMI derivation is a set of `infer` / `repair` rule sets in the LRMoo plugin,
   using the runtime minting capability (ADR 0014) and the resolver seam.
-- Regesta becomes, **by construction, an entity-reconciliation engine that runs
+- Palomar becomes, **by construction, an entity-reconciliation engine that runs
   during conversion** — WEMI derivation + authority reconciliation in one pass — a
   major capability, bounded honestly (precision-first, batch-local, tiered).
 - A pinned authority snapshot becomes an optional, versioned **input**; runs

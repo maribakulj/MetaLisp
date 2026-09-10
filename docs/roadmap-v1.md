@@ -1,4 +1,4 @@
-# Regesta V1 — Redefined Roadmap (rich LRMoo pivot)
+# Palomar V1 — Redefined Roadmap (rich LRMoo pivot)
 
 - Status: **Proposed**
 - Date: 2026-05-31
@@ -77,7 +77,7 @@ rich pivot is the intended evolution path, not a detour.
 **strategy C**: assertions remain ground truth; a **derived, typed LRMoo
 graph view** is computed on top, and it lives **in a plugin**, not the core.
 C is conditioned on ADR 0003: it is "plugins-as-data" applied to the ontology
-itself — the LRMoo plugin is the rich sibling of `regesta.plugins.canonical`.
+itself — the LRMoo plugin is the rich sibling of `palomar.plugins.canonical`.
 Reopening 0003 (letting the core own an ontology) is the *only* thing that
 would reopen the C-vs-typed-core-IR choice; as long as 0003 stands, C stands.
 
@@ -90,7 +90,7 @@ would reopen the C-vs-typed-core-IR choice; as long as 0003 stands, C stands.
      (MARC21, DC,          ▲   provenance · confidence ·         (LRMoo/RDF,
       IIIF, CRM…)          │   status · diagnostics              Linked Art,
                            │                                     IIIF, MARC21…)
-                  derived LRMoo typed view  (regesta.plugins.lrmoo)
+                  derived LRMoo typed view  (palomar.plugins.lrmoo)
                   F1 Work · F2 Expression · F3 Manifestation · F5 Item
                   + reused CIDOC-CRM classes/properties
 ```
@@ -139,7 +139,7 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
   all existing 0008 idempotency property tests stay green.
 
 ### WP-2 — LRMoo pivot plugin + derived typed view
-- **Goal:** the rich canonical layer as a plugin (`regesta.plugins.lrmoo`).
+- **Goal:** the rich canonical layer as a plugin (`palomar.plugins.lrmoo`).
 - **Deliverables:** the LRMoo vocabulary (F1/F2/F3/F5 + reused CRM
   classes/properties); **projection rules + a view API** that materializes the
   typed graph from assertions (C2); mapping to/from `:canon/*` where sensible;
@@ -206,7 +206,7 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
 - **Gate:** a realistic corpus processed within a stated time/memory budget.
 
 ### WP-8 — CLI / packaging / DX
-- **Goal:** drive everything from the CLI (`regesta.cli`).
+- **Goal:** drive everything from the CLI (`palomar.cli`).
 - **Deliverables:** `convert`, `validate`, `report` (loss), `conformance`,
   `apply-repairs`; packaging for institutional deployment.
 - **Depends on:** WP-4, WP-5, WP-6.
@@ -232,9 +232,9 @@ Each WP lists its goal, key deliverables, dependencies, ADRs touched, and the
 | WP-3 WEMI derivation (INTERMARC; clustering = id-collision; loss) | ✅ |
 | WP-4 spokes | ◐ — **7 importers in ✅**: INTERMARC-SRU, **INTERMARC-NG** (entity-relation, ADR 0019), **UNIMARC** (BnF diffusion — the MARC family complete), MARC21 (MARCXML), Dublin Core, MODS (nested), IIIF Presentation 3.0 (JSON); **4 round-trips ✅** (DC + MARC21 + MODS + IIIF ↔ floor — every floor spoke now round-trips; loss measured, id-stable & idempotent; INTERMARC is import-only by design, the rich-pivot source); shared `marcxml` core; 4-spoke convergence capstone; canonical→WEMI floor ✅; **RDF out in all three serialisations ✅** (N-Triples · Turtle · JSON-LD, LRMoo + CRM views); **Linked Art profile out ✅** (museum/Louvre target — F3→HumanMadeObject carries F2→LinguisticObject part_of F1→PropositionalObject, mapping verified vs the official examples, `docs/eval/linked-art.md`); **Linked Art now validated against the official draft-2020-12 schema** (real `networknt` validator, `$ref`-resolved — DoD #4: our roots are schema-valid, our only deviations are `additionalProperties` from embedding, *cleaner* than Getty's own Mona Lisa example which the strict schema also rejects); both LoC XSLT oracles in (MARC→DC differential, MARC→MODS convergence); **MARC21↔LRMoo at the *floor* level** |
 | WP-5 loss-aware report | ✅ (cross-edge double-count fixed in remediation R3) |
-| WP-8 CLI | ✅ — `regesta convert` / **`validate`** (canonical rules, policy-driven non-zero exit) / **`report`** (X→Y loss report alone) / **`inspect`** (the parsed canonical floor + minted WEMI/agent entities) / **`reconcile`** (cross-record agent reconciliation by authority id, ADR 0018) / **`apply-repairs`** (curate the inferred `:proposed` claims — the ADR 0005 repair-application engine `regesta.curate`: a pure decision function resolves each pending proposal to `:accepted`/`:rejected`/`:needs-review`; `flag`/`accept`/`reject` policies compose an ADR 0018 promotion guard) / **`conformance`** (check the WEMI projection against an institutional profile — WP-6 mechanism `regesta.conformance`; exits non-zero under the acceptance-threshold policy) / `formats` (`regesta.cli`, `:run` alias) over the conversion assembly |
-| WP-6 conformance | ◐ — **mechanism + three profiles ✅** (`regesta.conformance`: institutional profiles as diagnostic check sets over the projected record, policy-gated by the acceptance threshold; `regesta conformance --profile <linked-art\|intermarc\|iiif>`). One mechanism, two directions: the **Linked Art / Louvre** and **IIIF Presentation 3.0** *target* profiles check the projection's fitness to serialise (LA: HumanMadeObject root + name + the WEMI chain + identified creator; IIIF: a label, a Canvas-bearing digital object, a dereferenceable HTTP id — a real IIIF manifest is fully conformant); the **BnF INTERMARC** *source* profile checks a bibliographic record's native `:intermarc/*` fields (001/245 essentials, 003 ARK, an authority-linked 100 heading — Transition bibliographique, 260 date, 145 Work-link hint), grounded on real BnF SRU records. Dataless slice done; **institutional *certification*** (a passing report on real BnF/Louvre samples against their private acceptance criteria — DoD #5) stays partnership-gated (§ 7). The strict official-schema LA validation remains a separate test-only eval. |
-| WP-7 scale | ◐ — **streaming end-to-end + budget ✅** (`regesta.convert/convert-stream` + lazy input). Per-record conversion is stateless — Work convergence is id-collision, not a global pass (ADR 0008) — so a record stream folds a bounded loss report in constant working set (**100 000 records in a 512 MB heap, ~70 MB**, output/loss byte-identical to batch). **Input now streams too** for the MARC family: `marcxml/stream-records` pull-parses a Reader into a lazy record seq (plugin `:stream-importer` on MARC21/INTERMARC/UNIMARC), surfaced as `regesta convert … --stream --out`. End-to-end: a **97 MB / 56 000-record flat dump → 64 MB N-Triples in a 256 MB heap, ~33 MB used**, where the eager path OOMs (`docs/eval/scale.md`). Remaining (bounded by construction): SRU pages stay eager (small, stream at page granularity), non-MARC single-record formats don't stream; the live-reconciliation/store rung (roadmap §10) is post-V1. |
+| WP-8 CLI | ✅ — `palomar convert` / **`validate`** (canonical rules, policy-driven non-zero exit) / **`report`** (X→Y loss report alone) / **`inspect`** (the parsed canonical floor + minted WEMI/agent entities) / **`reconcile`** (cross-record agent reconciliation by authority id, ADR 0018) / **`apply-repairs`** (curate the inferred `:proposed` claims — the ADR 0005 repair-application engine `palomar.curate`: a pure decision function resolves each pending proposal to `:accepted`/`:rejected`/`:needs-review`; `flag`/`accept`/`reject` policies compose an ADR 0018 promotion guard) / **`conformance`** (check the WEMI projection against an institutional profile — WP-6 mechanism `palomar.conformance`; exits non-zero under the acceptance-threshold policy) / `formats` (`palomar.cli`, `:run` alias) over the conversion assembly |
+| WP-6 conformance | ◐ — **mechanism + three profiles ✅** (`palomar.conformance`: institutional profiles as diagnostic check sets over the projected record, policy-gated by the acceptance threshold; `palomar conformance --profile <linked-art\|intermarc\|iiif>`). One mechanism, two directions: the **Linked Art / Louvre** and **IIIF Presentation 3.0** *target* profiles check the projection's fitness to serialise (LA: HumanMadeObject root + name + the WEMI chain + identified creator; IIIF: a label, a Canvas-bearing digital object, a dereferenceable HTTP id — a real IIIF manifest is fully conformant); the **BnF INTERMARC** *source* profile checks a bibliographic record's native `:intermarc/*` fields (001/245 essentials, 003 ARK, an authority-linked 100 heading — Transition bibliographique, 260 date, 145 Work-link hint), grounded on real BnF SRU records. Dataless slice done; **institutional *certification*** (a passing report on real BnF/Louvre samples against their private acceptance criteria — DoD #5) stays partnership-gated (§ 7). The strict official-schema LA validation remains a separate test-only eval. |
+| WP-7 scale | ◐ — **streaming end-to-end + budget ✅** (`palomar.convert/convert-stream` + lazy input). Per-record conversion is stateless — Work convergence is id-collision, not a global pass (ADR 0008) — so a record stream folds a bounded loss report in constant working set (**100 000 records in a 512 MB heap, ~70 MB**, output/loss byte-identical to batch). **Input now streams too** for the MARC family: `marcxml/stream-records` pull-parses a Reader into a lazy record seq (plugin `:stream-importer` on MARC21/INTERMARC/UNIMARC), surfaced as `palomar convert … --stream --out`. End-to-end: a **97 MB / 56 000-record flat dump → 64 MB N-Triples in a 256 MB heap, ~33 MB used**, where the eager path OOMs (`docs/eval/scale.md`). Remaining (bounded by construction): SRU pages stay eager (small, stream at page granularity), non-MARC single-record formats don't stream; the live-reconciliation/store rung (roadmap §10) is post-V1. |
 | WP-9 release | ✗ |
 
 Also delivered beyond the original WPs: ADR 0018 (entity resolution at scale,
@@ -246,7 +246,7 @@ when the F-typing survives, demonstrated by a CRM→LRMoo round-trip
 `:crm-only` collapses at `E73` into `:ambiguity-collapsed` (the loss the
 down-projection reported is exactly what the up-projection cannot recover); the
 **entity-relation spoke** that ADR 0019 reserved is built —
-`regesta.plugins.intermarc-ng` reads BnF INTERMARC-NG OEMI entity-records (the
+`palomar.plugins.intermarc-ng` reads BnF INTERMARC-NG OEMI entity-records (the
 NOEMI / Transition-bibliographique format) graph→graph onto the LRMoo view
 (Œuvre/Expression/Manifestation → F1/F2/F3, `740/750 $3` → R4/R3), serialises through
 the existing CRM/LA/RDF exporters and round-trips back, validated on a spec-faithful
@@ -258,7 +258,7 @@ and a **multi-spoke convergence capstone** — INTERMARC + MARC21 + Dublin Core 
 MODS in one registry reaching one LRMoo pivot with one unified loss report, and
 the three floor formats (DC, MARC21, MODS) content-converging on the same Work id
 (the hub property); the **Linked Art profile export** (museum/Louvre, mapping
-verified vs the official examples); and the **`regesta.convert` assembly** — the
+verified vs the official examples); and the **`palomar.convert` assembly** — the
 institution-facing keystone wiring the 7 importers × 10 target serialisations
 through one pivot in a single call, returning the output plus the ADR 0015 loss
 report over every edge. It also forced spoke mapping-ids to be globally distinctive

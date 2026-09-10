@@ -117,7 +117,7 @@ current state, so the taxonomy is not mistaken for working code:
 
 All four loss categories now have a producer, across both edges. The
 institution-facing **conversion loss report** is assembled
-(`regesta.loss-report`): per-edge, per-category and **per-source-field**
+(`palomar.loss-report`): per-edge, per-category and **per-source-field**
 aggregation of both edges' loss, with a human-readable rendering — the
 "which of *my* fields survived?" artifact this ADR specifies. Still outstanding:
 - Plugin-contributed transforms are not yet classified for lossiness (their

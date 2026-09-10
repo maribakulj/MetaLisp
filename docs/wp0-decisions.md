@@ -169,13 +169,13 @@ Manifestation / Item) is itself a sub-decision. **Decision: accepted — resolve
 Across what set do we cluster Works?
 
 - **Batch-local only** (within one run; no persistence).
-  - *Pro:* honours "Regesta is not a storage system"; deterministic per run.
+  - *Pro:* honours "Palomar is not a storage system"; deterministic per run.
   - *Con:* can't cluster against unloaded records; cross-run consistency relies
     entirely on key stability (D5).
 - **External authority lookup** (online reconciliation, no local store).
   - *Pro:* better cross-institution identity.
   - *Con:* network / coverage / non-determinism; V2-ish.
-- **Persistent identity store** maintained by Regesta.
+- **Persistent identity store** maintained by Palomar.
   - *Pro:* true incremental cross-run clustering.
   - *Con:* violates the no-storage principle; large architectural addition.
 
@@ -230,7 +230,7 @@ differ wildly in tractability.
 ## C. WEMI-derivation control
 
 ### D7 — Automatic vs human-in-the-loop WEMI derivation
-When Regesta synthesizes WEMI, is it machine truth, or proposals a cataloguer
+When Palomar synthesizes WEMI, is it machine truth, or proposals a cataloguer
 accepts/rejects (ADR 0005)?
 
 - **Automatic in `infer`** (minted = `:asserted` machine truth, `:pass :infer`

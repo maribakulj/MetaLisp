@@ -9,7 +9,7 @@ evaluation "will need a gold that is **not** derived from `f145`".
 ## What it is
 
 `gold_workmanifested.csv` — data.bnf.fr's own `rdarelationships:workManifested`
-grouping, queried (SPARQL, POST) for the **281 manifestation ARKs of Regesta's own
+grouping, queried (SPARQL, POST) for the **281 manifestation ARKs of Palomar's own
 INTERMARC fixtures** (the proven C2 query structure, two `VALUES` blocks + `UNION`).
 Columns: `sourceArk, manifestation, manifestationTitle, work, workTitle`. 43 of the
 281 ARKs carry a data.bnf work link; the rest have none (work links are sparse —
@@ -24,7 +24,7 @@ with no stable authority ARK) — exactly the off-showcase situation. The f145-b
 records (Bovary, L'île mystérieuse, on stable Work ARKs) are a **circular control**:
 their gold *is* their f145 link.
 
-## Measured (`regesta.eval.bridging-test`)
+## Measured (`palomar.eval.bridging-test`)
 
 Exact `(author + normalised title)` clustering vs the gold:
 

@@ -1,13 +1,13 @@
-# Independent WEMI-derivation eval — Regesta vs the BIB-R benchmark
+# Independent WEMI-derivation eval — Palomar vs the BIB-R benchmark
 
-This measures Regesta's MARC21 → WEMI Work clustering against an **independent,
+This measures Palomar's MARC21 → WEMI Work clustering against an **independent,
 third-party** gold: the **BIB-R "Benchmark of FRBRization solutions"**
 (http://bib-r.github.io/, CC BY-NC). It is the non-circular counterpart that
 [`wemi-fidelity.md`](./wemi-fidelity.md) §3 says is needed, and a
 **third corpus** for ADR 0018's recall ceiling — after Bovary/data.bnf and
 OpenLibrary.
 
-Reproduce: `clojure -M:sandbox:test/unit -n regesta.eval.bibr-work-clustering-test`.
+Reproduce: `clojure -M:sandbox:test/unit -n palomar.eval.bibr-work-clustering-test`.
 Fixtures + derivation + licence: `test/fixtures/bibr-gold/README.md`.
 
 ---
@@ -18,12 +18,12 @@ The C2 eval scores P = R = 1.0, but its gold (`workManifested`) and its input
 (`f145 $3`) are two serialisations of the **same** BnF link — so it is a
 *transcription* check, not evidence of inference, and it says so. BIB-R removes that
 circularity: it is a **hand-curated MARC → FRBR/RDA gold** with no dependence on any
-link Regesta reads. Regesta sees only flat MARC; the gold is the cataloguer's
+link Palomar reads. Palomar sees only flat MARC; the gold is the cataloguer's
 independent WEMI grouping.
 
-## 1. What Regesta does here, and what the gold demands
+## 1. What Palomar does here, and what the gold demands
 
-- **Regesta** projects flat MARC21 by the *floor* rung (`lrmoo.project`): the Work
+- **Palomar** projects flat MARC21 by the *floor* rung (`lrmoo.project`): the Work
   key is `agent + norm(uniform title when present, else transcribed 245 title)`, and
   a Work is minted only when a creator is present. The **uniform-title bridging** (the
   MARC 240 step → `:canon/uniform-title`, ADR 0003 growth) is what lets two editions
@@ -53,7 +53,7 @@ joined records.
 | transcribed title only | 362 / 560 | 385 | 0 | 112 | 1.000 | 0.775 | 0.873 |
 | **+ uniform-title bridging** | 362 / 560 | 409 | 0 | 88 | **1.000** | **0.823** | **0.903** |
 
-- **Precision = 1.000, before and after.** Regesta never false-merges two distinct
+- **Precision = 1.000, before and after.** Palomar never false-merges two distinct
   gold Works — the `agent + norm-title` key is conservative, and bridging on the
   uniform title introduced **no** false merge (consistent with every prior eval).
 - **Recall 0.775 → 0.823.** Uniform-title bridging recovers 24 more same-Work pairs
@@ -70,7 +70,7 @@ The MARC `001`s carry no link to the gold's title-slug URIs, so the join is
 **excluded**. The gold itself fragments some works (La Fontaine's *Fables* appears
 under several work URIs), which caps clean coverage at **362 / 560 ≈ 65 %**. The
 metric is therefore over the cleanly-joinable subset, and the coverage is asserted
-as a first-class number, not buried. This does not bias precision (Regesta makes no
+as a first-class number, not buried. This does not bias precision (Palomar makes no
 false merge on the joined set) and only narrows the recall measurement to titles the
 gold resolves unambiguously.
 

@@ -3,7 +3,7 @@
 INTERMARC-NG is the BnF's NOEMI / Transition-bibliographique production format: not
 a flat documentary record but a **graph of entity-records** (Œuvre / Expression /
 Manifestation / Item / agents…), linked by the fundamental `7xx` relations whose
-`$3` carries the identifier of the entity in relation. `regesta.plugins.intermarc-ng`
+`$3` carries the identifier of the entity in relation. `palomar.plugins.intermarc-ng`
 imports it **graph → graph** straight onto the LRMoo view (no string floor, no
 WEMI-derivation inference — the WEMI distinctions are given).
 
