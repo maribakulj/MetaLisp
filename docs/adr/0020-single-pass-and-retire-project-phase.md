@@ -21,7 +21,7 @@ Two of those features never paid for themselves:
 
 - **The `:project` phase has no rules.** Projection in Regesta is not a
   rule-rewriting step over the IR. The canonical→WEMI work happens in the
-  `:infer` phase (`regesta.plugins.lrmoo.project`, `intermarc.frbrise`), and
+  `:infer` phase (`regesta.plugins.lrmoo.project`, `intermarc.wemi`), and
   emission to the ten target formats is done by **exporters** after the
   pipeline. `:project` was a slot reserved for a design that never
   materialized; every enum that lists it is the only place it appears.

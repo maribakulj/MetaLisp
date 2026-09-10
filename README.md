@@ -121,7 +121,7 @@ A separate, optional plugin — `regesta.plugins.canonical` — provides a
 `:canon/note`, `:canon/digital-object`, `:canon/loss-marker`) that format plugins
 can map toward for cross-source rules and projection. The set grows only by
 justified need — `:canon/uniform-title` (the cataloguer's controlled work title)
-was added for FRBRisation Work-key bridging.
+was added for WEMI-derivation Work-key bridging.
 
 This split keeps the core authentically agnostic while still enabling
 commensurability when it is wanted. See
@@ -199,7 +199,7 @@ plugin (ADR 0013), never the core.
 │   │                        #   spokes: marc21 · unimarc · intermarc[-ng] ·
 │   │                        #   marcxml · dc · mods · iiif (+ *.export);
 │   │                        #   lrmoo/ (pivot view · project · crm · linked-art ·
-│   │                        #   export · crm-import) · intermarc/frbrise
+│   │                        #   export · crm-import) · intermarc/wemi
 │   ├── spokes.clj           # Source-spoke registry
 │   ├── convert.clj          # Conversion assembly (source → pivot → target + loss)
 │   ├── validate.clj         # Validation gate
@@ -215,7 +215,7 @@ plugin (ADR 0013), never the core.
 │   └── junit/regesta/       # JUnit XML runner (CI)
 ├── docs/
 │   ├── adr/                 # Architecture Decision Records (0001–0019)
-│   ├── eval/                # Measured evals (FRBRisation, BIB-R, scale, …)
+│   ├── eval/                # Measured evals (WEMI derivation, BIB-R, scale, …)
 │   ├── cleanup/             # Audit + remediation passes
 │   └── roadmap-v1.md        # The work-package roadmap + Definition of Done
 ├── .github/workflows/ci.yml # Lint, format, test on every push
@@ -242,8 +242,8 @@ substrate is preserved as-is; the redefinition is an *extension*, not a rewrite.
 Against the work-package plan ([`docs/roadmap-v1.md`](./docs/roadmap-v1.md)), as of
 2026-06 the engineering is largely landed:
 
-- **WP-0…WP-5, WP-8 done** — design lock + FRBRisation spike, substrate
-  extensions, the LRMoo pivot + derived view, FRBRisation (cross-record Work
+- **WP-0…WP-5, WP-8 done** — design lock + WEMI-derivation spike, substrate
+  extensions, the LRMoo pivot + derived view, WEMI derivation (cross-record Work
   clustering by id-collision, plus uniform-title bridging), the loss-aware report,
   and the full CLI (`convert · validate · report · inspect · reconcile ·
   apply-repairs · conformance · formats`).
@@ -262,7 +262,7 @@ Against the work-package plan ([`docs/roadmap-v1.md`](./docs/roadmap-v1.md)), as
   `--from` warns instead of silently producing nothing). Remaining: further
   edge/golden coverage and the `v1.0.0` cut.
 
-FRBRisation fidelity is measured, not asserted — on real BnF data and an
+WEMI-derivation fidelity is measured, not asserted — on real BnF data and an
 independent third-party benchmark; see [`docs/eval/`](./docs/eval/). The honest
 remaining gates are real institutional acceptance criteria and a real at-scale
 corpus ([`docs/roadmap-v1.md`](./docs/roadmap-v1.md) §7).
@@ -441,7 +441,7 @@ target, and CRM→LRM is a *downcast* (ADR 0019). See
 
 **Scope reversal.** The original plan (below) deliberately deferred IIIF,
 CIDOC CRM, Linked Art, and **deduplication**. The redefinition pulls them in:
-cross-record Work clustering (FRBRisation) is core to the rich pivot, and the
+cross-record Work clustering (WEMI derivation) is core to the rich pivot, and the
 museum / presentation formats are first-class spokes. The forward compatibility
 the original IR reserved — the qualified-value design,
 [ADR 0011](./docs/adr/0011-fragments-for-qualified-values.md) — is what makes

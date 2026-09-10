@@ -1,8 +1,8 @@
 # BIB-R FRBRization benchmark — gold fixture
 
-An **independent** gold for evaluating Regesta's MARC21 → WEMI FRBRisation, from a
-third-party benchmark. Consumed by `regesta.eval.bibr-frbrisation-test` and
-documented in `docs/eval/bibr-frbrisation.md`.
+An **independent** gold for evaluating Regesta's MARC21 → WEMI derivation, from a
+third-party benchmark. Consumed by `regesta.eval.bibr-work-clustering-test` and
+documented in `docs/eval/bibr-work-clustering.md`.
 
 ## Source and licence
 
@@ -47,7 +47,7 @@ related works.)
 ## How the eval joins to it (and the honest caveat)
 
 The MARC `001`s (sequential `123456…`) carry **no** link to the gold's title-slug
-URIs, so `regesta.eval.bibr-frbrisation-test` joins each MARC record to a gold Work
+URIs, so `regesta.eval.bibr-work-clustering-test` joins each MARC record to a gold Work
 **by normalised title** (`regesta.text/norm` on both sides), keeping only titles the
 gold maps to a *single* Work. A title the gold fragments across several work URIs
 (e.g. La Fontaine's *Fables*) is **excluded**. Join coverage is **362 / 560

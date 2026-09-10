@@ -1,13 +1,13 @@
-# Independent FRBRisation eval — Regesta vs the BIB-R benchmark
+# Independent WEMI-derivation eval — Regesta vs the BIB-R benchmark
 
 This measures Regesta's MARC21 → WEMI Work clustering against an **independent,
 third-party** gold: the **BIB-R "Benchmark of FRBRization solutions"**
 (http://bib-r.github.io/, CC BY-NC). It is the non-circular counterpart that
-[`frbrisation-fidelity.md`](./frbrisation-fidelity.md) §3 says is needed, and a
+[`wemi-fidelity.md`](./wemi-fidelity.md) §3 says is needed, and a
 **third corpus** for ADR 0018's recall ceiling — after Bovary/data.bnf and
 OpenLibrary.
 
-Reproduce: `clojure -M:sandbox:test/unit -n regesta.eval.bibr-frbrisation-test`.
+Reproduce: `clojure -M:sandbox:test/unit -n regesta.eval.bibr-work-clustering-test`.
 Fixtures + derivation + licence: `test/fixtures/bibr-gold/README.md`.
 
 ---

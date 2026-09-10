@@ -98,7 +98,7 @@ aggregation, not a new subsystem.
 The model is decided in full above; producers are wired incrementally. Honest
 current state, so the taxonomy is not mistaken for working code:
 
-- **`:dropped` / `:import`** — produced by INTERMARC FRBRisation (`frbrise`) and
+- **`:dropped` / `:import`** — produced by INTERMARC WEMI derivation (`intermarc.wemi`) and
   the canonical→WEMI projection (`lrmoo.project`): native / canonical fields the
   WEMI view does not represent.
 - **`:dropped` / `:export`** — produced by the LRMoo RDF exporter

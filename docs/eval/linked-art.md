@@ -7,13 +7,13 @@ tree (not RDF triples-as-JSON-LD), so the export builds the resource tree Linked
 Art consumers expect.
 
 The mapping is **grounded in the official Linked Art model examples**, not guessed
-— the load-bearing decision (how to represent FRBR Work/Expression/Manifestation,
-which Linked Art has no native FRBR levels for) was taken from the examples below,
+— the load-bearing decision (how to represent the LRM Work/Expression/Manifestation
+levels, which Linked Art has no native equivalent for) was taken from the examples below,
 fetched and read directly.
 
 ## Entity mapping
 
-The FRBR chain maps to three *distinct* Linked Art resources (no collapse — Linked
+The WEMI chain maps to three *distinct* Linked Art resources (no collapse — Linked
 Art is more precise here than plain CRM, where F2/F3 both become E73):
 
 | WEMI | Linked Art type | linked by | source example |
@@ -68,7 +68,7 @@ identifier, and the Linked Art `created_by` Person carries it as `id` — an
 
 Because the ISNI is a *determinate* identifier, the agent identity is certified
 (D7) — exactly the signal real agent reconciliation needs. V1 mints it for
-INTERMARC's 100 `$1` ISNI (`regesta.plugins.intermarc.frbrise/with-identified-agent`);
+INTERMARC's 100 `$1` ISNI (`regesta.plugins.intermarc.wemi/with-identified-agent`);
 the string-only canonical floor (ADR 0003) cannot hold an authority-linked agent,
 so the floor spokes still emit a label-only creator. Cross-record agent
 de-duplication is ADR 0018 proper (deliberately not done here, though two records

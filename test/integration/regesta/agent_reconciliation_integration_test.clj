@@ -7,7 +7,7 @@
   (:require [clojure.test :refer [deftest is testing]]
             [regesta.plugins :as plug]
             [regesta.plugins.intermarc :as intermarc]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.mapping :as mapping]
             [regesta.reconcile :as rec]
             [regesta.runtime :as runtime]))
@@ -20,8 +20,8 @@
         compiled (mapping/compile-mappings (plug/all-mappings reg)
                                            (plug/effective-transforms reg))]
     (->> (intermarc/ingest (slurp fixture) {})
-         (mapv #(frbrise/with-identified-agent
-                  (frbrise/frbrise (:record (runtime/run-phase % compiled :normalize))))))))
+         (mapv #(wemi/with-identified-agent
+                  (wemi/derive-wemi (:record (runtime/run-phase % compiled :normalize))))))))
 
 (deftest madame-bovary-reconciles-to-one-certified-flaubert
   (let [{:keys [agents distinct mentions records]} (rec/reconcile-agents (wemi-records))]

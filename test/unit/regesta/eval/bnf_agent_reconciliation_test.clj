@@ -15,7 +15,7 @@
             [regesta.model :as model]
             [regesta.plugins :as plug]
             [regesta.plugins.intermarc :as intermarc]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.mapping :as mapping]
             [regesta.reconcile :as reconcile]
             [regesta.runtime :as runtime]))
@@ -29,7 +29,7 @@
         compiled (mapping/compile-mappings (plug/all-mappings reg)
                                            (plug/effective-transforms reg))
         load     (fn [f] (->> (intermarc/ingest (slurp (str base f)) {})
-                              (mapv #(frbrise/with-identified-agent
+                              (mapv #(wemi/with-identified-agent
                                        (:record (runtime/run-phase % compiled :normalize))))))]
     (into (load "bnf-sru-victor-hugo-50.xml") (load "bnf-sru-jules-verne-50.xml"))))
 

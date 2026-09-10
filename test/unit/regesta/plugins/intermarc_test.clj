@@ -74,5 +74,5 @@
       (is (= #{"Flaubert, Gustave"} (vals :canon/agent)))          ; controlled 100 $a + $m
       (is (seq (vals :canon/date)))                                 ; 260 $d (varies by edition)
       (is (seq (vals :canon/identifier)))                           ; 001 / 003
-      (testing "the native :intermarc/* assertions are retained (frbrise still reads them)"
+      (testing "the native :intermarc/* assertions are retained (derive-wemi still reads them)"
         (is (some #(= :intermarc/f145_3 (:predicate %)) (:assertions canon)))))))

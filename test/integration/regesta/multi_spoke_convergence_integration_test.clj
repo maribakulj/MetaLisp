@@ -8,7 +8,7 @@
    vocabularies.
 
    The two-rung ladder (ADR 0013) is visible here: INTERMARC takes the *enriched*
-   projection (`frbrise`, via the 145 $3 authority link), so its Work identity is
+   projection (`derive-wemi`, via the 145 $3 authority link), so its Work identity is
    authority-based; DC, MARC21 and MODS take the *floor* projection (string key),
    so floor records of the same creator+title collapse to the **same** Work id —
    content-addressed identity is format-independent on the floor. Converging
@@ -21,7 +21,7 @@
             [regesta.plugins :as plug]
             [regesta.plugins.dc :as dc]
             [regesta.plugins.intermarc :as intermarc]
-            [regesta.plugins.intermarc.frbrise :as frbrise]
+            [regesta.plugins.intermarc.wemi :as wemi]
             [regesta.plugins.lrmoo.export :as export]
             [regesta.plugins.lrmoo.project :as project]
             [regesta.plugins.lrmoo.view :as view]
@@ -45,7 +45,7 @@
   (->> (:records (intermarc/importer {} {:source/kind :file :source/value intermarc-fixture}))
        (filter #(= "ark:/12148/cb304403926" (:source %)))
        first
-       frbrise/frbrise))
+       wemi/derive-wemi))
 
 (defn- floor-project
   "The floor route a host takes for a mapping-bearing spoke: register, compile its

@@ -63,7 +63,7 @@ targets, loss-aware; conformance; streaming; the full CLI). WP-9
   eager (stream at page granularity), and the non-MARC single-record spokes don't
   stream (`--stream` rejects them with the streamable set). A new optional plugin key
   `:stream-importer` (`regesta.plugins` schema).
-- **Uniform-title bridging** — the FRBRisation recall step the fidelity doc names
+- **Uniform-title bridging** — the WEMI-derivation recall step the fidelity doc names
   ("D-series"). A ninth canonical predicate `:canon/uniform-title` (ADR 0003 growth
   discipline: the cataloguer's controlled work title, distinct from the transcribed
   `:canon/title`), mapped from MARC 240 `$a` (and emitted back on export, so the
@@ -73,7 +73,7 @@ targets, loss-aware; conformance; streaming; the full CLI). WP-9
   cluster; the Manifestation keeps its transcribed title. Records without a uniform
   title fall back to the transcribed title (unchanged behaviour). Measured on the
   independent BIB-R gold: recall **0.775 → 0.823** at **no precision cost** (still
-  1.000) — `docs/eval/bibr-frbrisation.md`.
+  1.000) — `docs/eval/bibr-work-clustering.md`.
   Wired across the floor family: MARC 240 `$a`, **UNIMARC 500 `$a`** (titre
   uniforme — on real BnF data it unifies the French editions and the German
   translation of one work into a single Work), and **MODS `<titleInfo
@@ -81,11 +81,11 @@ targets, loss-aware; conformance; streaming; the full CLI). WP-9
   latent-bug fix too: a uniform `titleInfo` was previously conflated into
   `:canon/title`; it now maps to `:canon/uniform-title`. (Dublin Core has no uniform
   title; INTERMARC keeps its richer `145 $3` authority-link rung.)
-- Independent FRBRisation eval against the third-party **BIB-R** benchmark
-  (`regesta.eval.bibr-frbrisation-test`, `test/fixtures/bibr-gold/`,
-  `docs/eval/bibr-frbrisation.md`). BIB-R ("Benchmark of FRBRization solutions",
+- Independent WEMI-derivation eval against the third-party **BIB-R** benchmark
+  (`regesta.eval.bibr-work-clustering-test`, `test/fixtures/bibr-gold/`,
+  `docs/eval/bibr-work-clustering.md`). BIB-R ("Benchmark of FRBRization solutions",
   bib-r.github.io, CC BY-NC) is a hand-curated MARC→FRBR/RDA gold with no
-  dependence on the BnF `f145` link — the non-circular gold `frbrisation-fidelity.md`
+  dependence on the BnF `f145` link — the non-circular gold `wemi-fidelity.md`
   §3 called for, and a third corpus for ADR 0018's recall ceiling. Regesta ingests
   the 560 MARCXML records, clusters by minted F1 Work, and is scored pairwise against
   the gold Work grouping (records joined by normalised title): **P = 1.000,
@@ -113,7 +113,7 @@ targets, loss-aware; conformance; streaming; the full CLI). WP-9
   profile checks a bibliographic record's own native `:intermarc/*` fields (a 001
   control number and a 245 title as essentials; the 003 ARK, an authority-linked
   100 heading — Transition bibliographique — and a 260 date as expectations; the
-  145 Work-link as a FRBRisation-readiness hint), grounded in what real BnF SRU
+  145 Work-link as a WEMI-derivation-readiness hint), grounded in what real BnF SRU
   records carry. Surfaced as the CLI verb `conformance <input> --from <fmt>
   --profile <linked-art|intermarc|iiif> [--policy <p>]`, exiting non-zero when the
   threshold is breached. This is **not** the strict official-schema validation
@@ -194,6 +194,11 @@ targets, loss-aware; conformance; streaming; the full CLI). WP-9
   rule binds a falsey value) and guarded against regression by a behavioural test.
 
 ### Changed
+
+- Terminology: *FRBRisation* → *WEMI derivation (LRMoo)* across code, ADRs and
+  evals; `regesta.plugins.intermarc.frbrise` → `regesta.plugins.intermarc.wemi`,
+  `frbrise` → `derive-wemi`, rule `:rule.intermarc/frbrise` →
+  `:rule.intermarc/derive-wemi`. No behavioural change.
 
 - **Phases are now a single pass (ADR 0020, supersedes ADR 0004).** Each phase
   fires every matching rule once against the record as it entered the phase;

@@ -6,7 +6,7 @@
 
    The WEMI/CRM/Linked-Art targets read `:lrmoo/*` and work for every spoke; the
    round-trip exporters (`dc`, `marc21`) read `:canon/*`, which every spoke —
-   INTERMARC included, since it now normalises to the floor alongside `frbrise` —
+   INTERMARC included, since it now normalises to the floor alongside `derive-wemi` —
    populates."
   (:require [clojure.test :refer [deftest is testing]]
             [regesta.convert :as cv]))
@@ -44,7 +44,7 @@
       (is (pos? (count (:output (run from to)))) (str from "->" to " is non-empty")))))
 
 (deftest intermarc-populates-the-floor-and-round-trips
-  (testing "INTERMARC normalises to :canon/* (alongside frbrise's enriched WEMI), so it round-trips"
+  (testing "INTERMARC normalises to :canon/* (alongside derive-wemi's enriched WEMI), so it round-trips"
     (let [dc (:output (run :intermarc :dc))]
       (is (pos? (count dc)) "intermarc->dc is now non-empty (was the degenerate case)")
       (is (re-find #"<dc:title>Madame Bovary</dc:title>" dc))

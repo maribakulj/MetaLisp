@@ -48,9 +48,9 @@ a generic engine needs to function at all.
 - `:canon/uniform-title` — *added 2026-06-06* under the growth discipline below.
   The cataloguer's controlled work title (MARC 240, MODS/UNIMARC uniform title),
   distinct from the transcribed `:canon/title`. Concrete use case: it is the
-  FRBRisation Work key that unifies an edition's transcribed-title variants, so the
+  WEMI-derivation Work key that unifies an edition's transcribed-title variants, so the
   floor projection keys the Work on it when present — a measured recall gain against
-  an independent gold (`docs/eval/bibr-frbrisation.md`).
+  an independent gold (`docs/eval/bibr-work-clustering.md`).
 
 Format plugins (DC, MARC, CIDOC) may — but are not required to — declare a
 mapping from their native predicates to `:canon/*`. Consumers that want

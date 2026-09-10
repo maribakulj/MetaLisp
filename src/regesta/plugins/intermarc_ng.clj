@@ -4,7 +4,7 @@
    documentary record but a *graph*: each record describes one OEMI entity (Œuvre /
    Expression / Manifestation / Item / agents…), and the fundamental `7xx` relations
    link them by the `$3` identifier of the entity in relation. So this importer maps
-   **graph → graph** straight onto the LRMoo view — no string floor, no FRBRisation
+   **graph → graph** straight onto the LRMoo view — no string floor, no WEMI-derivation
    inference (the distinctions are given), the least-lossy path in the system.
 
    It reuses the shared `marcxml` parse (NG is still marcxchange field/subfield XML);
@@ -19,7 +19,7 @@
    | `750 Réalise     $3` (Expression→Œuvre)     | `R3_is_realised_in` (F1→F2, *flipped*) |
 
    The result is one IR record holding all the entities + their WEMI relations — the
-   exact shape `frbrise` synthesises, but *read*, not inferred. It serialises through
+   exact shape `derive-wemi` synthesises, but *read*, not inferred. It serialises through
    the existing LRMoo / CIDOC-CRM / Linked Art exporters unchanged, and round-trips
    back via `lrmoo.crm-import` (ADR 0019).
 

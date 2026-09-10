@@ -5,7 +5,7 @@
    It reads only the canonical floor (`:canon/agent`, `:canon/title`) and mints a
    WEMI graph, so **any** spoke that maps to canonical (via shape + mapping) gets
    an LRMoo view — not just INTERMARC. This is the two-rung ladder's graceful
-   degradation (ADR 0013) made real: where `intermarc/frbrise` is the *enriched*
+   degradation (ADR 0013) made real: where `intermarc/derive-wemi` is the *enriched*
    projection that exploits the native `145 $3` authority link, this is the
    floor projection every format shares.
 
@@ -83,12 +83,12 @@
   "WEMI productions from the canonical floor: Manifestation always; Expression
    when a title is present (the minimal connector); Work when a creator is too.
 
-   Uniform-title bridging (the FRBRisation recall step, ADR 0003 growth): the
+   Uniform-title bridging (the WEMI-derivation recall step, ADR 0003 growth): the
    Manifestation keeps the *transcribed* `:canon/title`, but the Work/Expression
    identity key — and their R33 string — use the *uniform* title
    (`:canon/uniform-title`, e.g. MARC 240) when the record carries one. So two
    editions whose transcribed titles differ but whose uniform title agrees mint the
-   *same* Work id and cluster (measured: `docs/eval/bibr-frbrisation.md`). Records
+   *same* Work id and cluster (measured: `docs/eval/bibr-work-clustering.md`). Records
    with no uniform title fall back to the transcribed title — unchanged behaviour."
   [record]
   (let [rid        (:id record)
