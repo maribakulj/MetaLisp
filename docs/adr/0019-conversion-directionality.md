@@ -8,7 +8,7 @@
   receipt of irreversibility), ADR 0016 (WEMI derivation — the inference path), ADR 0017
   (entities on records — the graph IR), ADR 0001 (assertions/entities/references —
   the IR *is* a graph).
-- Demonstrated, not asserted: `regesta.plugins.lrmoo.crm-import` +
+- Demonstrated, not asserted: `palomar.plugins.lrmoo.crm-import` +
   `crm-import-test` round-trip our own CRM exports back to the LRMoo view.
 
 ## Context
@@ -99,7 +99,7 @@ not carry — the same principle as the floor spokes.
   the rule is tested on real output, with zero external data.
 - **The E-R spoke seam is real and reserved — and now built (spec-faithful).**
   INTERMARC-NG → LRMoo/CRM is the least-lossy conversion in the system (both ends
-  LRM-aligned) and probably the flagship BnF case. `regesta.plugins.intermarc-ng`
+  LRM-aligned) and probably the flagship BnF case. `palomar.plugins.intermarc-ng`
   implements it: NG entity-records (Œuvre/Expression/Manifestation) → LRMoo entities,
   the OEMI `7xx $3` relations → R3/R4/R7, reusing the `marcxml` core; agents (Person
   records + `700 A pour créateur`) surface as the identified Linked Art creator, and

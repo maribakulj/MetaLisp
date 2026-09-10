@@ -3,8 +3,8 @@
 This records what INTERMARC → WEMI derivation (WP-3, ADR 0016) actually does on
 real BnF data, measured two ways and reproducible from committed fixtures:
 
-- **C2 (fidelity, on the showcase)** — `regesta.eval.bovary-c2-test`
-- **Showcase boundary (coverage, off the showcase)** — `regesta.eval.showcase-boundary-test`
+- **C2 (fidelity, on the showcase)** — `palomar.eval.bovary-c2-test`
+- **Showcase boundary (coverage, off the showcase)** — `palomar.eval.showcase-boundary-test`
 
 Run both with `clojure -M:sandbox:test/unit`.
 
@@ -93,8 +93,8 @@ correctly yields 0 records, not a parse failure.)
 - **Caveat retained.** The C2 score is high because gold and input share one BnF
   signal; it is a transcription check, not evidence of inference. Independent
   evaluation of bridging needs a gold that is *not* derived from `f145`.
-- **Bridging now measured (partially)** — `regesta.eval.bridging-test`,
-  `test/fixtures/er-gold/bridging/`. data.bnf `workManifested` grouped Regesta's own
+- **Bridging now measured (partially)** — `palomar.eval.bridging-test`,
+  `test/fixtures/er-gold/bridging/`. data.bnf `workManifested` grouped Palomar's own
   manifestation ARKs; the records **without** `f145` are the non-circular test (the
   gold is not a re-serialisation of a link they carry — they map to data.bnf
   `temp-work` URIs). On that subset, exact `(author + title)` clustering bridges
@@ -106,11 +106,11 @@ correctly yields 0 records, not a parse failure.)
   stress variant-title recall on an independent gold — the broad clean Work gold
   ADR 0018 says does not exist in open sources.
 - **Variant-title recall now stressed on an independent gold** —
-  [`bibr-work-clustering.md`](./bibr-work-clustering.md), `regesta.eval.bibr-work-clustering-test`.
+  [`bibr-work-clustering.md`](./bibr-work-clustering.md), `palomar.eval.bibr-work-clustering-test`.
   The third-party **BIB-R** FRBRization benchmark (CC BY-NC, no `f145` dependence)
   supplies the broad, hand-curated MARC → Work gold the bullet above lacked: 560
   records whose gold Works unify transcribed-title variants/translations/abridgements.
-  Over the title-joinable subset (362 / 560), Regesta scores **P = 1.000** with
+  Over the title-joinable subset (362 / 560), Palomar scores **P = 1.000** with
   **uniform-title bridging lifting recall 0.775 → 0.823** (MARC 240 →
   `:canon/uniform-title`, the named "D-series" step, built here at no precision cost) —
   the recall ceiling measured *and* partly closed on a third corpus, not just asserted.

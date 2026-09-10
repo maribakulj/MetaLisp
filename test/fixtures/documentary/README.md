@@ -4,7 +4,7 @@ Curated real-world metadata samples spanning the universal V1 scope
 (IIIF ↔ INTERMARC) plus the pivot ontologies and identity authorities. Used by
 the WP-0 WEMI-derivation spike (`dev/spike/`) and, later, by spoke tests (WP-4).
 
-**These are third-party samples, not Regesta's own work.** Every file is traced
+**These are third-party samples, not Palomar's own work.** Every file is traced
 to its upstream source in [`MANIFEST.tsv`](./MANIFEST.tsv) (fixture path → source
 URL). Keep that file as the attribution record.
 

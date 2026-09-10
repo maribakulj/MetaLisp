@@ -21,7 +21,7 @@ silently swallowed in the hub.
 
 The core ships only a structural vocabulary; documentary meaning lives in a
 plugin (ADR 0003). The existing documentary vocabulary —
-`regesta.plugins.canonical`, about ten flat `:canon/*` predicates — is
+`palomar.plugins.canonical`, about ten flat `:canon/*` predicates — is
 deliberately a lowest-common-denominator floor. It cannot, alone, carry the
 bibliographic WEMI structure (Work / Expression / Manifestation / Item) or the
 event-centric museum model the new spokes require.
@@ -67,8 +67,8 @@ IR.
   (decision D3: in-IR minted typed assertions), so provenance, confidence,
   status, and diagnostics ride on them unchanged, and re-projection is
   idempotent.
-- It lives in a **plugin**, `regesta.plugins.lrmoo` — the rich sibling of
-  `regesta.plugins.canonical` — not in the core.
+- It lives in a **plugin**, `palomar.plugins.lrmoo` — the rich sibling of
+  `palomar.plugins.canonical` — not in the core.
 
 This is "plugins-as-data (ADR 0007) applied to the ontology itself": the
 ontological commitment is a plugin (projection rules + mapping + view +
@@ -150,7 +150,7 @@ generalises to coverage rated at *both* rungs.
 - **Preserved:** the assertion IR, the agnostic core, provenance / confidence /
   diagnostics, and the rule + mapping machinery (ADR 0001 / 0003 / 0007 / 0009
   intact). No Sprint 0–6 rework.
-- **New:** a plugin `regesta.plugins.lrmoo` carrying (a) the LRMoo vocabulary
+- **New:** a plugin `palomar.plugins.lrmoo` carrying (a) the LRMoo vocabulary
   subset (D2: the WEMI core *plus* the CRM object core the shipped IIIF / museum
   spokes demand, grown by ADR 0003's justification discipline), (b) the
   projection rules that derive the typed view, (c) the typed traversal API, and
@@ -173,7 +173,7 @@ generalises to coverage rated at *both* rungs.
 The decision stands; only a slice is built. Honest current state, so the target is
 not read as shipped:
 
-- **Built:** the `regesta.plugins.lrmoo` vocabulary subset (the WEMI core —
+- **Built:** the `palomar.plugins.lrmoo` vocabulary subset (the WEMI core —
   F1/F2/F3/F5, R3/R4/R7, R33); the derived typed traversal API (`lrmoo.view`); an
   **N-Triples** exporter (`lrmoo.export`) that emits a Manifestation's real
   data.bnf ARK (ADR 0017); and the **generic canonical→WEMI projection**

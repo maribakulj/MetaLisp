@@ -1,6 +1,6 @@
 # C2 gold — Madame Bovary work cluster (data.bnf.fr ground truth)
 
-This is a **gold standard** for evaluating Regesta's WEMI derivation (WP-3,
+This is a **gold standard** for evaluating Palomar's WEMI derivation (WP-3,
 ADR 0016): which of our INTERMARC manifestation records belong to the same *Work*,
 according to the BnF's own published LRM data — not a hand-label.
 

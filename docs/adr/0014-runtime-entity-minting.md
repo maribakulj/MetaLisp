@@ -38,7 +38,7 @@ Three constraints bound the decision:
    inferred-vs-ingested distinction lives in *provenance*, not status — ADR 0005;
    this also preserves dedup, since assertion identity excludes provenance,
    ADR 0008) plus a `:confidence`. By the engine default
-   (`regesta.rules/default-status-for-phase`), `:infer` / `:repair` productions
+   (`palomar.rules/default-status-for-phase`), `:infer` / `:repair` productions
    are **`:proposed`** — proposals until confirmed (the conservative,
    precision-first default). The D7 hybrid's *high-confidence auto-commit*
    (promotion to `:asserted`) is **now implemented** as a commit policy: a minting
